@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7d9b15d-319f-4260-8974-5d5f3c49ae26" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mariadb-java-client-3.4.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/mariadbConnection/MariadbConnection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,9 +23,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2hVt52NWvz9oexNck2S8LWdHwi2" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -39,18 +40,29 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/abela/Documents/ProyectosJava/SuperWashBD/ojdbc11.jar",
+    "last_opened_file_path": "C:/Users/Andre/Desktop/SuperWashBD/mariadb-java-client-3.4.0.jar",
+    "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Main.java",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "advanced.settings"
+    "settings.editor.selected.configurable": "advanced.settings",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Andre\Desktop\SuperWashBD\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Andre\Desktop\SuperWashBD" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
         <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+        <option value="jdk-17.0.9-jbr-17.0.9-4caba194b151-51f1b679" />
       </set>
     </attachedChunks>
   </component>
@@ -62,8 +74,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1717690892584</updated>
+      <workItem from="1717724119367" duration="137000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

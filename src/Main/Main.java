@@ -1,9 +1,13 @@
 package Main;
 
+import mariadbConnection.MariadbConnection;
+
 import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
+        new MariadbConnection("IP DEL SERVER", 3306, "PruebasU", "SU USER CAREMONDAS", "PONGAN SU PASSWORD").connect();
+        /*
         Connection conn = null;
         Statement sentencia = null;
         ResultSet resultado = null;
@@ -71,6 +75,8 @@ public class Main {
                 }
             }
         }
+
+        */
 
         System.out.println("Consulta finalizada.");
     }
