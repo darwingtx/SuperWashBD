@@ -9,7 +9,7 @@ public interface ConnectionBD {
 
     public String listarCLientes();
 
-    public String listarRegistros();
+    public void listarRegistros();
 
     public String[] tipoLavado();
 

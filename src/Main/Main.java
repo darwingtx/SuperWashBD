@@ -9,8 +9,7 @@ public class Main {
 
         OracleConnection x = new OracleConnection("127.0.0.1",1521,"PruebasU","C##LAU","hola123");
         x.connect();
-        String s = x.listarRegistros();
-        System.out.println(s);
+        x.listarRegistros();
 
     }
 }

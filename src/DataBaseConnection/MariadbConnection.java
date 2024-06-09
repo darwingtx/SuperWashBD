@@ -91,8 +91,8 @@ public class MariadbConnection implements ConnectionBD{
     }
 
     @Override
-    public String listarRegistros() {
-        return "";
+    public void listarRegistros() {
+
     }
 
     @Override
