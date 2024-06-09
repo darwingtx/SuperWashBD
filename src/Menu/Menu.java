@@ -6,25 +6,25 @@ import DataBaseConnection.OracleConnection;
 import DataSchema.Cliente;
 import DataSchema.Lavado;
 import DataSchema.*;
-
-
 import java.util.Scanner;
 
 public class Menu {
-    public static void menu(boolean UseConection) {
 
+    private static ConnectionBD dbConnection;
+    public static void menu(boolean UseConection) {
         final String[] opts = {
-            "Ingresar cliente",
-            "Ingresar Vehiculo", 
-            "Ingresar Lavado",
-            "Salir"
+                "Ingresar cliente",
+                "Ingresar Vehiculo",
+                "Ingresar Registro de Lavado ",
+                "Listar Registros de Lavado ",
+                "Listar clientes",
+                "Salir"
         };
 
-        ConnectionBD dbConnection;
         if (UseConection)
             dbConnection = new MariadbConnection("192.168.128.12", 3306, "PruebasU", "admin", "andresUser");
         else
-            dbConnection = new OracleConnection("127.0.0.1",1521,"PruebasU","C##LAU","hola123");
+            dbConnection = new OracleConnection("127.0.0.1", 1521, "PruebasU", "C##LAU", "hola123");
 
         dbConnection.connect();
 
@@ -49,14 +49,12 @@ public class Menu {
             }
         }
     }
-    
-    // metodos de obtencion de datos (darwin se la come)
 
 
     public static Cliente obtenerCliente() {
         Cliente c;
-        String[] tipo_cliente = {"Estandar","Premiun"};        
-        c = new Cliente(input("id cliente"), menuOpciones(tipo_cliente), input("nombre"), input("apellido"),input("Telefono"), input("descuento"));
+        String[] tipo_cliente = dbConnection.tipoCliente();
+        c = new Cliente(input("id cliente"), menuOpciones(tipo_cliente), input("nombre"), input("apellido"), input("Telefono"), input("descuento"));
         return c;
     }
 
@@ -71,7 +69,7 @@ public class Menu {
     public static Lavado obtenerLavado() {
         Lavado l;
 
-        l = new Lavado(input("id Lavado"), input("id vehiculo"), inputInt(null), inputInt(null), input("Precio"), input("Duracion"));
+        l = new Lavado(input(null), input("id vehiculo"), inputInt(null), inputInt(null), input("Precio"), input("Duracion"));
         return l;
     }
 
@@ -81,11 +79,11 @@ public class Menu {
         Scanner r = new Scanner(System.in);
         do {
             for (int i = 0; i < opts.length; i++) {
-                System.out.println((i+1) + ". "+ opts[i]);
+                System.out.println((i + 1) + ". " + opts[i]);
             }
             System.out.print("Escriba su opcion: ");
             opt = r.nextInt();
-            if ( opt >= 0 && opt < opts.length ) pass = true;
+            if (opt >= 0 && opt < opts.length) pass = true;
 
         } while (!pass);
         r.close();
@@ -99,11 +97,11 @@ public class Menu {
         Scanner r = new Scanner(System.in);
         do {
             for (int i = 0; i < opts.length; i++) {
-                System.out.println((i+1) + ". "+ opts[i]);
+                System.out.println((i + 1) + ". " + opts[i]);
             }
             System.out.print("Escriba su opcion: ");
             opt = r.nextInt();
-            if ( opt >= 0 && opt < opts.length ) pass = true;
+            if (opt >= 0 && opt < opts.length) pass = true;
 
         } while (!pass);
         r.close();
@@ -125,4 +123,6 @@ public class Menu {
         r.close();
         return d;
     }
+
+
 }

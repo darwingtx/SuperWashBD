@@ -19,7 +19,7 @@ public class MariadbConnection implements ConnectionBD {
      *                  privileguios:
      *                      GRANT ALL PRIVILEGES ON NOMBRE_DB.* TO 'USERNAME'@'IP COMO LA DEL USUARIO O %' IDENTIFIED BY 'PASSWORD';
      *
-     *          - Tener el servicio de mariadb corriendo (esa se las dejo si estan en windows)
+     *          - Tener el servicio de mariadb corriendo (esa se las dejo si estan en windows) XD
      *
      *          - Si se van a conectar desde otra maquina, configurar el bind-address = 0.0.0.0 o a la ip espesifica del cliente
      *                  - se puede configurar en el archivo /etc/mysql/mariadb.conf.d/50-server.cnf (en linux)
@@ -80,6 +80,26 @@ public class MariadbConnection implements ConnectionBD {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String[] tipoCliente() {
+        return new String[0];
+    }
+
+    @Override
+    public String[] tipoLavado() {
+        return new String[0];
+    }
+
+    @Override
+    public String ListarRegistros() {
+        return "";
+    }
+
+    @Override
+    public String ListarCLientes() {
+        return "";
     }
 
     /**
