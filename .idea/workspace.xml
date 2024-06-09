@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7d9b15d-319f-4260-8974-5d5f3c49ae26" name="Changes" comment="" />
+    <list default="true" id="c7d9b15d-319f-4260-8974-5d5f3c49ae26" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/ConnectionBD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/ConnectionBD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

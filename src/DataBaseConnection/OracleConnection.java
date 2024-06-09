@@ -117,6 +117,7 @@ public class OracleConnection implements ConnectionBD {
                          "INNER JOIN VEHICULO v ON lv.ID_VEHICULO = v.ID_VEHICULO\n" +
                          "INNER JOIN LAVADO l on lv.ID_Tipo_Lavado = l.ID_LAVADO")) {
                 System.out.println("Seleccionando...");
+                showResponse(resultSet);
                 while (resultSet.next()) {
                     s += "ID_LAVADOVEH: " + resultSet.getInt("ID_LAVADOVEH") + "\n";
                     s += "TIPO_LAVADO: " + resultSet.getString("TIPO_LAVADO") + "\n";
@@ -155,10 +156,10 @@ public class OracleConnection implements ConnectionBD {
 
         // extract data
         int row = 0;
-        while (res.next()) {
+        while (response.next()) {
             ArrayList<String> rowData = new ArrayList<>();
             for (int i = 1; i <= columnCount; i++) {
-                rowData.add(res.getObject(i) + "");
+                rowData.add(response.getObject(i) + "");
             }
             data.add(rowData);
             row++;
