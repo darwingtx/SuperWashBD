@@ -1,5 +1,8 @@
 package Menu;
 
+import DataBaseConnection.ConnectionBD;
+import DataBaseConnection.MariadbConnection;
+import DataBaseConnection.OracleConnection;
 import DataSchema.Cliente;
 import DataSchema.Lavado;
 import DataSchema.*;
@@ -8,7 +11,7 @@ import DataSchema.*;
 import java.util.Scanner;
 
 public class Menu {
-    public static void menu() {
+    public static void menu(boolean UseConection) {
 
         final String[] opts = {
             "Ingresar cliente",
@@ -17,20 +20,28 @@ public class Menu {
             "Salir"
         };
 
+        ConnectionBD dbConnection;
+        if (UseConection)
+            dbConnection = new MariadbConnection("192.168.128.12", 3306, "PruebasU", "admin", "andresUser");
+        else
+            dbConnection = new OracleConnection("127.0.0.1",1521,"PruebasU","C##LAU","hola123");
+
+        dbConnection.connect();
+
         while (true) {
 
-            switch (menuOpcionesString(opts)) {
-                case "Salir":
+            switch (menuOpciones(opts)) {
+                case 4:
                     System.exit(0);
                     break;
 
-                case "Ingresar cliente":
+                case 1:
                     break;
 
-                case "Ingresar Vehiculo":
+                case 2:
                     break;
 
-                case "Ingresar Lavado":
+                case 3:
                     break;
 
                 default:

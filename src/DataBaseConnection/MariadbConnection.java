@@ -4,7 +4,7 @@ import terminalUtils.TerminalUtils;
 
 import java.sql.*;
 
-public class MariadbConnection {
+public class MariadbConnection implements ConnectionBD {
 
     /**
      * DOCUMENTACION MARIADB
@@ -69,9 +69,9 @@ public class MariadbConnection {
             TerminalUtils.successTrace("Connection Successfully!");
 
             query = connection.createStatement();
-            res = query.executeQuery("select * from producto");
+            res = query.executeQuery("select * from lavado;");
 
-            exeQuery("select");
+            // exeQuery("select");
 
             while (res.next()) {
                 System.out.println("ID: " + res.getObject(1) + ", nombre: " + res.getString(2));
