@@ -84,7 +84,7 @@ public class TerminalUtils {
     private void getFormatNoConfig() {
     } //TODO: no configuracion, encontrar max dato
 
-    public String printTable(String[][] data, boolean sepRow) {
+    public String printTable(ArrayList<ArrayList<String>> data, boolean sepRow) {
 
         StringBuilder sb = new StringBuilder();
 
@@ -98,9 +98,9 @@ public class TerminalUtils {
         sb.append(printRowSeparator());
         
         // DATA
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < data.size(); i++) {
             for (int j = 0; j < printFormat.length; j++) {
-                sb.append(String.format(String.format(printFormat[j], data[i][j])));
+                sb.append(String.format(String.format(printFormat[j], data.get(i).get(j))));
             }
             sb.append(sepRow ? "\n" + printRowSeparator() : "\n");
         }
@@ -114,10 +114,7 @@ public class TerminalUtils {
         for (ColumnFormat columnFormat : columnsFormat) {
             int columnWidth = columnFormat.getWidth();
             sb.append("+");
-            for (int i = 0; i < columnWidth; i++) {
-                sb.append("-");
-            }
-            sb.append("--");
+            sb.append("-".repeat(Math.max(0, columnWidth+2)));
         }
         sb.append("+\n");
         return sb.toString();

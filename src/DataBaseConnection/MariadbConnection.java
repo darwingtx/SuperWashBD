@@ -1,8 +1,10 @@
 package DataBaseConnection;
 
+import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class MariadbConnection {
 
@@ -69,9 +71,9 @@ public class MariadbConnection {
             TerminalUtils.successTrace("Connection Successfully!");
 
             query = connection.createStatement();
-            res = query.executeQuery("select * from producto");
+            res = query.executeQuery("select * from lavado");
 
-            exeQuery("select");
+            showResponse(res);
 
             while (res.next()) {
                 System.out.println("ID: " + res.getObject(1) + ", nombre: " + res.getString(2));
@@ -95,4 +97,35 @@ public class MariadbConnection {
     private void exe(String sql) throws SQLException {
         query.execute("INSERT INTO producto VALUES(12, 'Insersion Java', 323, 3)");
     }
+
+    // utility: show the response in a table
+    private void showResponse(ResultSet response) throws SQLException {
+
+        ResultSetMetaData resData = response.getMetaData();
+        int columnCount  = resData.getColumnCount();
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        ArrayList<ColumnFormat> columnsFormat = new ArrayList<>();
+        for (int i = 1; i <= columnCount; i++) {
+            columnsFormat.add(new ColumnFormat(resData.getColumnDisplaySize(i), resData.getColumnName(i), ""));
+        }
+
+        // extract data
+        int row = 0;
+        while (res.next()) {
+            ArrayList<String> rowData = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                rowData.add(res.getObject(i) + "");
+            }
+            data.add(rowData);
+            row++;
+        }
+
+        System.out.print(new TerminalUtils(columnsFormat).printTable(data, false));
+    }
+
+
+
+
 }
