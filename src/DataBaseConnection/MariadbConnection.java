@@ -1,4 +1,4 @@
-package mariadbConnection;
+package DataBaseConnection;
 
 import terminalUtils.TerminalUtils;
 
