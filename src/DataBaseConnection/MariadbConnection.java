@@ -6,7 +6,7 @@ import terminalUtils.TerminalUtils;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MariadbConnection {
+public class MariadbConnection implements ConnectionBD{
 
     /**
      * DOCUMENTACION MARIADB
@@ -62,7 +62,7 @@ public class MariadbConnection {
         this.url = "jdbc:mariadb://"+host+":3306/"+db+"?user="+usr+"&password="+pass;
     }
 
-    public void connect() {
+    public OracleConnection connect() {
         this.url = "jdbc:mariadb://"+host+":"+port+"/"+db+"?user="+usr+"&password="+pass;
         TerminalUtils.infoTrace("Trying to connect. url: " + url);
         try {
@@ -82,6 +82,27 @@ public class MariadbConnection {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        return null;
+    }
+
+    @Override
+    public String ListarCLientes() {
+        return "";
+    }
+
+    @Override
+    public String ListarRegistros() {
+        return "";
+    }
+
+    @Override
+    public String[] tipoLavado() {
+        return new String[0];
+    }
+
+    @Override
+    public String[] tipoCliente() {
+        return new String[0];
     }
 
     /**
