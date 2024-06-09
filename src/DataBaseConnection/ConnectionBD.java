@@ -7,9 +7,9 @@ public interface ConnectionBD {
 
     public OracleConnection connect();
 
-    public String ListarCLientes();
+    public String listarCLientes();
 
-    public String ListarRegistros();
+    public String listarRegistros();
 
     public String[] tipoLavado();
 

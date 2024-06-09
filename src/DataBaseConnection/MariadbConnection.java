@@ -86,12 +86,12 @@ public class MariadbConnection implements ConnectionBD{
     }
 
     @Override
-    public String ListarCLientes() {
+    public String listarCLientes() {
         return "";
     }
 
     @Override
-    public String ListarRegistros() {
+    public String listarRegistros() {
         return "";
     }
 

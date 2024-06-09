@@ -107,7 +107,7 @@ public class OracleConnection implements ConnectionBD {
     }
 
     @Override
-    public String ListarRegistros() {
+    public String listarRegistros() {
         String s = "";
         if (connection!= null) {
             try (Statement statement = connection.createStatement();
@@ -137,7 +137,7 @@ public class OracleConnection implements ConnectionBD {
     }
 
     @Override
-    public String ListarCLientes() {
+    public String listarCLientes() {
         return "";
     }
 
