@@ -117,7 +117,7 @@ public class OracleConnection implements ConnectionBD {
                          "INNER JOIN VEHICULO v ON lv.ID_VEHICULO = v.ID_VEHICULO\n" +
                          "INNER JOIN LAVADO l on lv.ID_Tipo_Lavado = l.ID_LAVADO")) {
                 System.out.println("Seleccionando...");
-                showResponse(resultSet);
+               showResponse(resultSet);
                 while (resultSet.next()) {
                     s += "ID_LAVADOVEH: " + resultSet.getInt("ID_LAVADOVEH") + "\n";
                     s += "TIPO_LAVADO: " + resultSet.getString("TIPO_LAVADO") + "\n";
@@ -129,6 +129,7 @@ public class OracleConnection implements ConnectionBD {
                     s += "PRECIO: " + resultSet.getInt("PRECIO") + "\n";
                     s += "------------------------\n";
                 }
+                //System.out.println(s);
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("ERROR -> SQL Exception: " + e.getMessage());
@@ -150,19 +151,28 @@ public class OracleConnection implements ConnectionBD {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
         ArrayList<ColumnFormat> columnsFormat = new ArrayList<>();
-        for (int i = 1; i <= columnCount; i++) {
-            columnsFormat.add(new ColumnFormat(resData.getColumnDisplaySize(i), resData.getColumnName(i), ""));
-        }
+
 
         // extract data
+        int[] maxLenghtColumn = new int[columnCount];
+        for (int i = 0; i < columnCount; i++) {
+            maxLenghtColumn[i] = resData.getColumnName(i+1).length();
+        }
+
         int row = 0;
         while (response.next()) {
             ArrayList<String> rowData = new ArrayList<>();
             for (int i = 1; i <= columnCount; i++) {
-                rowData.add(response.getObject(i) + "");
+                String d = response.getObject(i) + "";
+                rowData.add(d);
+                if (d.length() > maxLenghtColumn[i-1]) maxLenghtColumn[i-1] = d.length();
             }
             data.add(rowData);
             row++;
+        }
+
+        for (int i = 1; i <= columnCount; i++) {
+            columnsFormat.add(new ColumnFormat(maxLenghtColumn[i-1], resData.getColumnName(i), ""));
         }
 
         System.out.print(new TerminalUtils(columnsFormat).printTable(data, false));

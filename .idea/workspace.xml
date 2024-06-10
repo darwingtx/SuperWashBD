@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c7d9b15d-319f-4260-8974-5d5f3c49ae26" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/ConnectionBD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/ConnectionBD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/MariadbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/MariadbConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +95,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Desarrollo" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
