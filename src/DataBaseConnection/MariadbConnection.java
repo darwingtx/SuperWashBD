@@ -62,7 +62,7 @@ public class MariadbConnection implements ConnectionBD{
         this.url = "jdbc:mariadb://"+host+":3306/"+db+"?user="+usr+"&password="+pass;
     }
 
-    public OracleConnection connect() {
+    public ConnectionBD connect() {
         this.url = "jdbc:mariadb://"+host+":"+port+"/"+db+"?user="+usr+"&password="+pass;
         TerminalUtils.infoTrace("Trying to connect. url: " + url);
         try {
