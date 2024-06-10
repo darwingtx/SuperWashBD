@@ -1,17 +1,19 @@
 package DataBaseConnection;
 
+import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
-
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OracleConnection implements ConnectionBD {
     // atributes
-    private String host;
-    private int port;
-    private String db;
-    private String usr;
-    private String pass;
-    private String url;
+    final String host;
+    final int port;
+    final String db;
+    final String usr;
+    final String pass;
+    final String url;
 
     // atribute - connections- - querys
 
@@ -29,64 +31,139 @@ public class OracleConnection implements ConnectionBD {
     }
 
     @Override
-    public void connect() {
-        this.url = "jdbc:oracle:thin:@//" + host + ":" + port + "/" + "xe";
+    public OracleConnection connect() {
         TerminalUtils.infoTrace("Trying to connect. url: " + url);
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             connection = DriverManager.getConnection(url, usr, pass);
-            System.out.println("[+] Conexión Exitosa!");
-
-
-            query = connection.createStatement();
-            System.out.println("Seleccionando...");
-
-            // Consulta simple para verificar la conexión y acceso a la tabla
-            res = query.executeQuery("select * from cliente");
-            if (res.next()) {
-                System.out.println("conn -> " + res.getObject(1));
-                int count = res.getInt(1);
-                System.out.println("Número de registros en la tabla Lavado: " + count);
-            }
-
-            // Realiza la consulta principal
-            res = query.executeQuery("SELECT * FROM Lavado");
-            while (res.next()) {
-                System.out.println("ID: " + res.getObject(1) + ", Tipo_Lavado: " + res.getString("Tipo_Lavado"));
-            }
+            TerminalUtils.infoTrace("------[+] Conexión Exitosa!------");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("ERROR -> Clase del controlador no encontrada: " + e.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("ERROR -> SQL Exception: " + e.getMessage());
-        } finally {
-            // Cerrar ResultSet
-            if (res != null) {
-                try {
-                    res.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            // Cerrar Statement
-            if (query != null) {
-                try {
-                    query.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            // Cerrar Connection
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        }
+        return null;
+    }
+
+    public void closeConnection() {
+        if (connection!= null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
+    }
 
-        System.out.println("Consulta finalizada.");
+    public void executeQuery(String query) {
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            System.out.println("Seleccionando...");
+            while (resultSet.next()) {
+                System.out.println("ID: " + resultSet.getObject(1) + ", Tipo_Lavado: " + resultSet.getString("Tipo_Lavado"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String[] tipoCliente() {
+        List<String> tipos = new ArrayList<>();
+        if (connection!= null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("Select nombre from Tipo_Cliente")) {
+                System.out.println("Seleccionando...");
+                while (resultSet.next()) {
+                    tipos.add(resultSet.getString("nombre"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+        return tipos.toArray(new String[0]);
+    }
+
+    @Override
+    public String[] tipoLavado() {
+        List<String> tipos = new ArrayList<>();
+        if (connection!= null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("Select TIPO_LAVADO from Lavado")) {
+                System.out.println("Seleccionando...");
+                while (resultSet.next()) {
+                    tipos.add(resultSet.getString("TIPO_LAVADO"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+        return tipos.toArray(new String[0]);
+    }
+
+    @Override
+    public void listarRegistros() {
+        String s = "";
+        if (connection!= null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("SELECT lv.ID_LAVADOVEH, l.TIPO_LAVADO, lv.ID_VEHICULO, v.TIPO_VEHICULO, c.ID_CLIENTE, c.nombre, c.apellido, lv.precio  \n" +
+                         "FROM LAVADOVEHICULO lv\n" +
+                         "INNER JOIN CLIENTE c on lv.ID_CLIENTE = c.ID_CLIENTE\n" +
+                         "INNER JOIN VEHICULO v ON lv.ID_VEHICULO = v.ID_VEHICULO\n" +
+                         "INNER JOIN LAVADO l on lv.ID_Tipo_Lavado = l.ID_LAVADO")) {
+                System.out.println("Seleccionando...");
+                showResponse(resultSet);
+                while (resultSet.next()) {
+                    s += "ID_LAVADOVEH: " + resultSet.getInt("ID_LAVADOVEH") + "\n";
+                    s += "TIPO_LAVADO: " + resultSet.getString("TIPO_LAVADO") + "\n";
+                    s += "ID_VEHICULO: " + resultSet.getString("ID_VEHICULO") + "\n";
+                    s += "TIPO_VEHICULO: " + resultSet.getString("TIPO_VEHICULO") + "\n";
+                    s += "ID_CLIENTE: " + resultSet.getInt("ID_CLIENTE") + "\n";
+                    s += "NOMBRE: " + resultSet.getString("NOMBRE") + "\n";
+                    s += "APELLIDO: " + resultSet.getString("APELLIDO") + "\n";
+                    s += "PRECIO: " + resultSet.getInt("PRECIO") + "\n";
+                    s += "------------------------\n";
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public String listarCLientes() {
+        return "";
+    }
+
+    private void showResponse(ResultSet response) throws SQLException {
+
+        ResultSetMetaData resData = response.getMetaData();
+        int columnCount  = resData.getColumnCount();
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        ArrayList<ColumnFormat> columnsFormat = new ArrayList<>();
+        for (int i = 1; i <= columnCount; i++) {
+            columnsFormat.add(new ColumnFormat(resData.getColumnDisplaySize(i), resData.getColumnName(i), ""));
+        }
+
+        // extract data
+        int row = 0;
+        while (response.next()) {
+            ArrayList<String> rowData = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                rowData.add(response.getObject(i) + "");
+            }
+            data.add(rowData);
+            row++;
+        }
+
+        System.out.print(new TerminalUtils(columnsFormat).printTable(data, false));
     }
 }
