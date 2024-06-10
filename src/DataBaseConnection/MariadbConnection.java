@@ -79,7 +79,8 @@ public class MariadbConnection implements ConnectionBD{
     @Override
     public String listarCLientes() {
         try {
-            return showResponse(query.executeQuery("SELECT * FROM cliente;"));
+            return showResponse(query.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
+                    "INNER JOIN tipo_cliente t on c.id_tipo_cliente = t.id_tipo_cliente"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

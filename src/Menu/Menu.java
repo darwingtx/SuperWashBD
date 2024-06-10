@@ -11,10 +11,12 @@ public class Menu {
     public static void menu() {
 
         final String[] opts = {
-            "Ingresar cliente",
-            "Ingresar Vehiculo", 
-            "Ingresar Lavado",
-            "Salir"
+                "Ingresar cliente",
+                "Ingresar Vehiculo",
+                "Ingresar Registro de Lavado ",
+                "Listar Registros de Lavado ",
+                "Listar clientes",
+                "Salir"
         };
 
         while (true) {
@@ -38,13 +40,11 @@ public class Menu {
             }
         }
     }
-    
-    // metodos de obtencion de datos (darwin se la come)
 
 
     public static Cliente obtenerCliente() {
         Cliente c;
-        String[] tipo_cliente = {"Estandar","Premiun"};        
+        String[] tipo_cliente = {"Estandar","Premiun"};
         c = new Cliente(input("id cliente"), menuOpciones(tipo_cliente), input("nombre"), input("apellido"),input("Telefono"), input("descuento"));
         return c;
     }

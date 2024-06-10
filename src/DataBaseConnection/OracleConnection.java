@@ -140,7 +140,20 @@ public class OracleConnection implements ConnectionBD {
 
     @Override
     public String listarCLientes() {
-        return "";
+        String s = "";
+        if (connection!= null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
+                         "INNER JOIN tipo_cliente t on c.id_tipo_cliente = t.id_tipo_cliente")) {
+                System.out.println("Seleccionando...");
+                showResponse(resultSet);
+                //System.out.println(s);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+        return s;
     }
 
     private void showResponse(ResultSet response) throws SQLException {
