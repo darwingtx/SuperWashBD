@@ -71,7 +71,7 @@ public class MariadbConnection {
             TerminalUtils.successTrace("Connection Successfully!");
 
             query = connection.createStatement();
-            res = query.executeQuery("select * from lavado");
+            res = query.executeQuery("select * from cliente");
 
             showResponse(res);
 
@@ -95,7 +95,7 @@ public class MariadbConnection {
     }
 
     private void exe(String sql) throws SQLException {
-        query.execute("INSERT INTO producto VALUES(12, 'Insersion Java', 323, 3)");
+        query.execute(sql);
     }
 
     // utility: show the response in a table
@@ -107,25 +107,30 @@ public class MariadbConnection {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
         ArrayList<ColumnFormat> columnsFormat = new ArrayList<>();
-        for (int i = 1; i <= columnCount; i++) {
-            columnsFormat.add(new ColumnFormat(resData.getColumnDisplaySize(i), resData.getColumnName(i), ""));
-        }
+
 
         // extract data
+        int[] maxLenghtColumn = new int[columnCount];
+        for (int i = 0; i < columnCount; i++) {
+            maxLenghtColumn[i] = resData.getColumnName(i+1).length();
+        }
+
         int row = 0;
         while (res.next()) {
             ArrayList<String> rowData = new ArrayList<>();
             for (int i = 1; i <= columnCount; i++) {
-                rowData.add(res.getObject(i) + "");
+                String d = res.getObject(i) + "";
+                rowData.add(d);
+                if (d.length() > maxLenghtColumn[i-1]) maxLenghtColumn[i-1] = d.length();
             }
             data.add(rowData);
             row++;
         }
 
+        for (int i = 1; i <= columnCount; i++) {
+            columnsFormat.add(new ColumnFormat(maxLenghtColumn[i-1], resData.getColumnName(i), ""));
+        }
+
         System.out.print(new TerminalUtils(columnsFormat).printTable(data, false));
     }
-
-
-
-
 }
