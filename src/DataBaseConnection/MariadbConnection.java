@@ -71,7 +71,23 @@ public class MariadbConnection implements ConnectionBD{
             TerminalUtils.successTrace("Connection Successfully!");
 
             query = connection.createStatement();
-            res = query.executeQuery("select * from cliente");
+            res = query.executeQuery("SELECT \n" +
+                    "    lv.id_lavado_veh, \n" +
+                    "    l.tipo_lavado, \n" +
+                    "    lv.id_vehiculo, \n" +
+                    "    v.tipo_vehiculo, \n" +
+                    "    c.id_cliente, \n" +
+                    "    c.nombre, \n" +
+                    "    c.apellido, \n" +
+                    "    lv.precio\n" +
+                    "FROM \n" +
+                    "    lavado_vehiculo lv\n" +
+                    "INNER JOIN \n" +
+                    "    cliente c ON lv.id_cliente = c.id_cliente\n" +
+                    "INNER JOIN \n" +
+                    "    vehiculo v ON lv.id_vehiculo = v.id_vehiculo\n" +
+                    "INNER JOIN \n" +
+                    "    lavado l ON lv.id_tipo_lavado = l.id_lavado;\n");
 
             showResponse(res);
 
