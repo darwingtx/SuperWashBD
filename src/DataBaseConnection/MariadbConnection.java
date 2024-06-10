@@ -62,16 +62,33 @@ public class MariadbConnection implements ConnectionBD{
         this.url = "jdbc:mariadb://"+host+":3306/"+db+"?user="+usr+"&password="+pass;
     }
 
-    public OracleConnection connect() {
+    public ConnectionBD connect() {
         this.url = "jdbc:mariadb://"+host+":"+port+"/"+db+"?user="+usr+"&password="+pass;
         TerminalUtils.infoTrace("Trying to connect. url: " + url);
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             connection = DriverManager.getConnection(url);
             TerminalUtils.successTrace("Connection Successfully!");
-
             query = connection.createStatement();
-            res = query.executeQuery("SELECT \n" +
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public String listarCLientes() {
+        try {
+            return showResponse(query.executeQuery("SELECT * FROM cliente;"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String listarRegistros() {
+        try {
+            return showResponse(query.executeQuery("SELECT \n" +
                     "    lv.id_lavado_veh, \n" +
                     "    l.tipo_lavado, \n" +
                     "    lv.id_vehiculo, \n" +
@@ -87,28 +104,10 @@ public class MariadbConnection implements ConnectionBD{
                     "INNER JOIN \n" +
                     "    vehiculo v ON lv.id_vehiculo = v.id_vehiculo\n" +
                     "INNER JOIN \n" +
-                    "    lavado l ON lv.id_tipo_lavado = l.id_lavado;\n");
-
-            showResponse(res);
-
-            while (res.next()) {
-                System.out.println("ID: " + res.getObject(1) + ", nombre: " + res.getString(2));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
+                    "    lavado l ON lv.id_tipo_lavado = l.id_lavado;\n"));
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
-    }
-
-    @Override
-    public String listarCLientes() {
-        return "";
-    }
-
-    @Override
-    public void listarRegistros() {
-
     }
 
     @Override
@@ -121,22 +120,8 @@ public class MariadbConnection implements ConnectionBD{
         return new String[0];
     }
 
-    /**
-     *
-     * @param sql {@code SELECT} statement
-     * @throws SQLException
-     */
-    private ResultSet exeQuery(String sql) throws SQLException {
-        return query.executeQuery(sql);
-
-    }
-
-    private void exe(String sql) throws SQLException {
-        query.execute(sql);
-    }
-
     // utility: show the response in a table
-    private void showResponse(ResultSet response) throws SQLException {
+    private String showResponse(ResultSet response) throws SQLException {
 
         ResultSetMetaData resData = response.getMetaData();
         int columnCount  = resData.getColumnCount();
@@ -147,9 +132,9 @@ public class MariadbConnection implements ConnectionBD{
 
 
         // extract data
-        int[] maxLenghtColumn = new int[columnCount];
+        int[] maxLengthColumn = new int[columnCount];
         for (int i = 0; i < columnCount; i++) {
-            maxLenghtColumn[i] = resData.getColumnName(i+1).length();
+            maxLengthColumn[i] = resData.getColumnName(i+1).length();
         }
 
         int row = 0;
@@ -158,16 +143,16 @@ public class MariadbConnection implements ConnectionBD{
             for (int i = 1; i <= columnCount; i++) {
                 String d = res.getObject(i) + "";
                 rowData.add(d);
-                if (d.length() > maxLenghtColumn[i-1]) maxLenghtColumn[i-1] = d.length();
+                if (d.length() > maxLengthColumn[i-1]) maxLengthColumn[i-1] = d.length();
             }
             data.add(rowData);
             row++;
         }
 
         for (int i = 1; i <= columnCount; i++) {
-            columnsFormat.add(new ColumnFormat(maxLenghtColumn[i-1], resData.getColumnName(i), ""));
+            columnsFormat.add(new ColumnFormat(maxLengthColumn[i-1], resData.getColumnName(i), ""));
         }
 
-        System.out.print(new TerminalUtils(columnsFormat).printTable(data, false));
+        return new TerminalUtils(columnsFormat).printTable(data, false);
     }
 }

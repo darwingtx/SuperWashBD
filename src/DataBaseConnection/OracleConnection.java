@@ -107,7 +107,7 @@ public class OracleConnection implements ConnectionBD {
     }
 
     @Override
-    public void listarRegistros() {
+    public String listarRegistros() {
         String s = "";
         if (connection!= null) {
             try (Statement statement = connection.createStatement();
@@ -134,6 +134,7 @@ public class OracleConnection implements ConnectionBD {
                 System.out.println("ERROR -> SQL Exception: " + e.getMessage());
             }
         }
+        return s;
     }
 
     @Override

@@ -5,11 +5,11 @@ import java.sql.SQLException;
 
 public interface ConnectionBD {
 
-    public OracleConnection connect();
+    public ConnectionBD connect();
 
     public String listarCLientes();
 
-    public void listarRegistros();
+    public String listarRegistros();
 
     public String[] tipoLavado();
 
