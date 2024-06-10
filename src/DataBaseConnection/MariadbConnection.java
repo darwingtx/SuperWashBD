@@ -5,37 +5,18 @@ import terminalUtils.TerminalUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MariadbConnection implements ConnectionBD{
 
     /**
-     * DOCUMENTACION MARIADB
-     *      Para conectarse a la base de datos, tienes que tener presente lo siguiente:
-     *          - Tener un usuario creado con privileguios sobre la base de datos:
-     *
-     *                  crear usuario:
-     *                      create user admin@'IP DE CONEXION EN CASO DE QUE NO SEA LOCALHOST' identified by 'andresUser'
-     *                          - Ejemplo de ip: 192.168.128.% donde el % representa /24 (dejen el %)
-     *
-     *
-     *                  privileguios:
-     *                      GRANT ALL PRIVILEGES ON NOMBRE_DB.* TO 'USERNAME'@'IP COMO LA DEL USUARIO O %' IDENTIFIED BY 'PASSWORD';
-     *
-     *          - Tener el servicio de mariadb corriendo (esa se las dejo si estan en windows)
-     *
-     *          - Si se van a conectar desde otra maquina, configurar el bind-address = 0.0.0.0 o a la ip espesifica del cliente
-     *                  - se puede configurar en el archivo /etc/mysql/mariadb.conf.d/50-server.cnf (en linux)
-     *
-     *
      * TODO: ESTA VAINALOCA
      * Triggers:
      *   - cuando se inserte, enseguida calcular el valor dependiendo del tipo de vehiculo (moto, carro, camion), tipo de lavado (interior, exterior, completo) y tipo cliente (premiun 20%, estandar 0%)
      *   -
-     *
      * Procedimientos:
      *   - insertar
      *   - consultar datos
-     *
     */
 
 
@@ -59,7 +40,7 @@ public class MariadbConnection implements ConnectionBD{
         this. db = db;
         this. usr = usr;
         this. pass = pass;
-        this.url = "jdbc:mariadb://"+host+":3306/"+db+"?user="+usr+"&password="+pass;
+        this.url = "jdbc:mariadb://"+host+":"+port+"/"+db+"?user="+usr+"&password="+pass;
     }
 
     public ConnectionBD connect() {
@@ -113,24 +94,46 @@ public class MariadbConnection implements ConnectionBD{
 
     @Override
     public String[] tipoLavado() {
-        return new String[0];
+        List<String> tipos = new ArrayList<>();
+        if (connection!= null) {
+            try (ResultSet resultSet = query.executeQuery("Select tipo_lavado from lavado")) {
+                while (resultSet.next()) {
+                    tipos.add(resultSet.getString(1));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+        return tipos.toArray(new String[0]);
     }
 
     @Override
     public String[] tipoCliente() {
-        return new String[0];
+        List<String> tipos = new ArrayList<>();
+        if (connection!= null) {
+            try (ResultSet resultSet = query.executeQuery("Select nombre from tipo_cliente")) {
+                while (resultSet.next()) {
+                    tipos.add(resultSet.getString(1));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+        return tipos.toArray(new String[0]);
     }
 
     // utility: show the response in a table
     private String showResponse(ResultSet response) throws SQLException {
 
+        if (response == null) return "Empty Set";
+
         ResultSetMetaData resData = response.getMetaData();
+
         int columnCount  = resData.getColumnCount();
-
         ArrayList<ArrayList<String>> data = new ArrayList<>();
-
         ArrayList<ColumnFormat> columnsFormat = new ArrayList<>();
-
 
         // extract data
         int[] maxLengthColumn = new int[columnCount];
@@ -139,10 +142,10 @@ public class MariadbConnection implements ConnectionBD{
         }
 
         int row = 0;
-        while (res.next()) {
+        while (response.next()) {
             ArrayList<String> rowData = new ArrayList<>();
             for (int i = 1; i <= columnCount; i++) {
-                String d = res.getObject(i) + "";
+                String d = response.getObject(i) + "";
                 rowData.add(d);
                 if (d.length() > maxLengthColumn[i-1]) maxLengthColumn[i-1] = d.length();
             }

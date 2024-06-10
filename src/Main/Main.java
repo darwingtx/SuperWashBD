@@ -2,14 +2,23 @@ package Main;
 
 import DataBaseConnection.*;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
-        //new MariadbConnection("192.168.128.12", 3306, "PruebasU", "admin", "andresUser").connect();
-       // TerminalUtils.infoTrace("Bye");
-
-        OracleConnection x = new OracleConnection("127.0.0.1",1521,"PruebasU","C##LAU","hola123");
-        x.connect();
-        x.listarRegistros();
-        x.listarCLientes();
+        if (true) {
+            ConnectionBD db = new MariadbConnection(
+                    System.getenv("DB_HOST"),
+                    Integer.parseInt(System.getenv("DB_PORT")),
+                    System.getenv("DB_NAME"),
+                    System.getenv("DB_USR"),
+                    System.getenv("DB_PASS"));
+            db.connect();
+            System.out.println(Arrays.toString(Arrays.stream(db.tipoLavado()).toArray()));
+        } else {
+            OracleConnection x = new OracleConnection("127.0.0.1", 1521, "PruebasU", "C##LAU", "hola123");
+            x.connect();
+            x.listarRegistros();
+        }
     }
 }

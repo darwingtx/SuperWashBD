@@ -78,7 +78,7 @@ public class TerminalUtils {
             width += c.getWidth();
         }
 
-        infoTrace("Formato: " + Colours.RT + Arrays.stream(printFormat).toList());
+        // infoTrace("Formato: " + Colours.RT + Arrays.stream(printFormat).toList());
     }
 
     private void getFormatNoConfig() {
