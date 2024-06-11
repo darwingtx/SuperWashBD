@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c7d9b15d-319f-4260-8974-5d5f3c49ae26" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/MariadbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/MariadbConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Others/credentials.env" beforeDir="false" afterPath="$PROJECT_DIR$/src/Others/credentials.env" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,13 +61,13 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Desarrollo",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Andre/Desktop/SuperWashBD/mariadb-java-client-3.4.0.jar",
+    "last_opened_file_path": "C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Others/credentials.env",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Main.java",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -78,6 +78,25 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Andre\Desktop\SuperWashBD" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="credencialesBD" type="Application" factoryName="Application">
+      <module name="SuperWashBD" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="src/Others/credentials.env" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -105,7 +124,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/Desarrollo" />
+                        <option value="Desarrollo" />
                       </list>
                     </value>
                   </entry>

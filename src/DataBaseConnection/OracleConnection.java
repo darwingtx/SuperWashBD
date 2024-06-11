@@ -2,6 +2,7 @@ package DataBaseConnection;
 
 import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class OracleConnection implements ConnectionBD {
     }
 
     public void closeConnection() {
-        if (connection!= null) {
+        if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
@@ -73,7 +74,7 @@ public class OracleConnection implements ConnectionBD {
     @Override
     public String[] tipoCliente() {
         List<String> tipos = new ArrayList<>();
-        if (connection!= null) {
+        if (connection != null) {
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery("Select nombre from Tipo_Cliente")) {
                 System.out.println("Seleccionando...");
@@ -91,7 +92,7 @@ public class OracleConnection implements ConnectionBD {
     @Override
     public String[] tipoLavado() {
         List<String> tipos = new ArrayList<>();
-        if (connection!= null) {
+        if (connection != null) {
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery("Select TIPO_LAVADO from Lavado")) {
                 System.out.println("Seleccionando...");
@@ -109,7 +110,7 @@ public class OracleConnection implements ConnectionBD {
     @Override
     public String listarRegistros() {
         String s = "";
-        if (connection!= null) {
+        if (connection != null) {
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery("SELECT lv.ID_LAVADOVEH, l.TIPO_LAVADO, lv.ID_VEHICULO, v.TIPO_VEHICULO, c.ID_CLIENTE, c.nombre, c.apellido, lv.precio  \n" +
                          "FROM LAVADOVEHICULO lv\n" +
@@ -117,7 +118,7 @@ public class OracleConnection implements ConnectionBD {
                          "INNER JOIN VEHICULO v ON lv.ID_VEHICULO = v.ID_VEHICULO\n" +
                          "INNER JOIN LAVADO l on lv.ID_Tipo_Lavado = l.ID_LAVADO")) {
                 System.out.println("Seleccionando...");
-               showResponse(resultSet);
+                showResponse(resultSet);
                 while (resultSet.next()) {
                     s += "ID_LAVADOVEH: " + resultSet.getInt("ID_LAVADOVEH") + "\n";
                     s += "TIPO_LAVADO: " + resultSet.getString("TIPO_LAVADO") + "\n";
@@ -141,7 +142,7 @@ public class OracleConnection implements ConnectionBD {
     @Override
     public String listarCLientes() {
         String s = "";
-        if (connection!= null) {
+        if (connection != null) {
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
                          "INNER JOIN tipo_cliente t on c.id_tipo_cliente = t.id_tipo_cliente")) {
@@ -159,7 +160,7 @@ public class OracleConnection implements ConnectionBD {
     private void showResponse(ResultSet response) throws SQLException {
 
         ResultSetMetaData resData = response.getMetaData();
-        int columnCount  = resData.getColumnCount();
+        int columnCount = resData.getColumnCount();
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
@@ -169,7 +170,7 @@ public class OracleConnection implements ConnectionBD {
         // extract data
         int[] maxLenghtColumn = new int[columnCount];
         for (int i = 0; i < columnCount; i++) {
-            maxLenghtColumn[i] = resData.getColumnName(i+1).length();
+            maxLenghtColumn[i] = resData.getColumnName(i + 1).length();
         }
 
         int row = 0;
@@ -178,14 +179,14 @@ public class OracleConnection implements ConnectionBD {
             for (int i = 1; i <= columnCount; i++) {
                 String d = response.getObject(i) + "";
                 rowData.add(d);
-                if (d.length() > maxLenghtColumn[i-1]) maxLenghtColumn[i-1] = d.length();
+                if (d.length() > maxLenghtColumn[i - 1]) maxLenghtColumn[i - 1] = d.length();
             }
             data.add(rowData);
             row++;
         }
 
         for (int i = 1; i <= columnCount; i++) {
-            columnsFormat.add(new ColumnFormat(maxLenghtColumn[i-1], resData.getColumnName(i), ""));
+            columnsFormat.add(new ColumnFormat(maxLenghtColumn[i - 1], resData.getColumnName(i), ""));
         }
 
         System.out.print(new TerminalUtils(columnsFormat).printTable(data, false));
