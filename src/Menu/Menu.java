@@ -35,26 +35,26 @@ public class Menu {
                         System.getenv("DB_USR"),
                         System.getenv("DB_PASS"));
                 db.connect();
-                menuMdb(db, opts);
+                menuDB(db, opts);
 
                 break;
 
             case "Trabajara con Oracle Database":
-                OracleConnection x = new OracleConnection("127.0.0.1", 1521, "SQLFinal", "PARZ", "1015332154");
+                OracleConnection x = new  OracleConnection("127.0.0.1", 1521, "PruebasU", "C##LAU", "hola123");
+                
                 x.connect();
-                menuOracle(x, opts);
+                menuDB(x, opts);
                 break;
             default:
                 break;
         }
     }
 
-    private static void menuOracle(OracleConnection x, String[] opts) {
+    private static void menuDB(ConnectionBD x, String[] opts) {
         while (true) {
 
             switch (menuOpcionesString(opts)) {
                 case "Salir":
-                x.closeConnection();
                     System.exit(0);
                     break;
 
@@ -84,39 +84,7 @@ public class Menu {
         }
     }
 
-    private static void menuMdb(ConnectionBD db, String[] opts) {
-        while (true) {
 
-            switch (menuOpcionesString(opts)) {
-                case "Salir":
-                    System.exit(0);
-                    break;
-
-                case "Ingresar cliente":
-
-                    break;
-
-                case "Ingresar Vehiculo":
-
-                    break;
-
-                case "Ingresar Registro de Lavado ":
-
-                    break;
-
-                case "Listar Registros de Lavado ":
-                    db.listarRegistros();
-                    break;
-
-                case "Listar clientes":
-                    db.listarCLientes();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
 
     public static Cliente obtenerCliente() {
         Cliente c;
