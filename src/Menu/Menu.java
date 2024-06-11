@@ -40,12 +40,7 @@ public class Menu {
                 break;
 
             case "Trabajara con Oracle Database":
-                OracleConnection x = new OracleConnection(
-                        System.getenv("DB_HOST"),
-                        Integer.parseInt(System.getenv("DB_PORT")),
-                        System.getenv("DB_NAME"),
-                        System.getenv("DB_USR"),
-                        System.getenv("DB_PASS"));
+                OracleConnection x = new OracleConnection("127.0.0.1", 1521, "SQLFinal", "PARZ", "1015332154");
                 x.connect();
                 menuOracle(x, opts);
                 break;
