@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7d9b15d-319f-4260-8974-5d5f3c49ae26" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Others/config.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Others/credentials.env" beforeDir="false" afterPath="$PROJECT_DIR$/src/Others/credentials.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Others/credentials.env" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,12 +56,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "Application.credencialesBD.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Desarrollo",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Others/credentials.env",
+    "last_opened_file_path": "C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Others/config.env",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Main.java",
     "project.structure.last.edited": "Modules",
@@ -81,6 +82,7 @@
   </component>
   <component name="RunManager">
     <configuration name="credencialesBD" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="SuperWashBD" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="true" />
@@ -90,7 +92,7 @@
         <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
         <ENTRIES>
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="src/Others/credentials.env" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="src/Others/config.env" />
         </ENTRIES>
       </extension>
       <method v="2">
@@ -135,5 +137,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

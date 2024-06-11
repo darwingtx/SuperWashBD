@@ -22,39 +22,45 @@ public class Menu {
                 "Trabajara con Oracle Database",
                 "Salir"
         };
+        ConnectionBD db = null;
         switch (menuOpcionesString(tConx)) {
             case "Salir":
                 System.exit(0);
                 break;
 
             case "Trabajara con MariaDB":
-                ConnectionBD db = new MariadbConnection(
+                db = new MariadbConnection(
                         System.getenv("DB_HOST"),
                         Integer.parseInt(System.getenv("DB_PORT")),
                         System.getenv("DB_NAME"),
                         System.getenv("DB_USR"),
                         System.getenv("DB_PASS"));
                 db.connect();
-                menuMdb(db, opts);
+                menuDB(db, opts);
 
                 break;
 
             case "Trabajara con Oracle Database":
-                OracleConnection x = new OracleConnection("127.0.0.1", 1521, "SQLFinal", "PARZ", "1015332154");
-                x.connect();
-                menuOracle(x, opts);
+                db = new  OracleConnection(
+                        System.getenv("DB_HOST"),
+                        Integer.parseInt(System.getenv("DB_PORT")),
+                        System.getenv("DB_NAME"),
+                        System.getenv("DB_USR"),
+                        System.getenv("DB_PASS"));
+
+                db.connect();
+                menuDB(db, opts);
                 break;
             default:
                 break;
         }
     }
 
-    private static void menuOracle(OracleConnection x, String[] opts) {
+    private static void menuDB(ConnectionBD x, String[] opts) {
         while (true) {
 
             switch (menuOpcionesString(opts)) {
                 case "Salir":
-                x.closeConnection();
                     System.exit(0);
                     break;
 
@@ -84,39 +90,7 @@ public class Menu {
         }
     }
 
-    private static void menuMdb(ConnectionBD db, String[] opts) {
-        while (true) {
 
-            switch (menuOpcionesString(opts)) {
-                case "Salir":
-                    System.exit(0);
-                    break;
-
-                case "Ingresar cliente":
-
-                    break;
-
-                case "Ingresar Vehiculo":
-
-                    break;
-
-                case "Ingresar Registro de Lavado ":
-
-                    break;
-
-                case "Listar Registros de Lavado ":
-                    db.listarRegistros();
-                    break;
-
-                case "Listar clientes":
-                    db.listarCLientes();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
 
     public static Cliente obtenerCliente() {
         Cliente c;
@@ -160,10 +134,10 @@ public class Menu {
         return opt;
     }
 
-     public static String menuOpcionesString(String[] opciones) {
+    public static String menuOpcionesString(String[] opciones) {
         Scanner scanner = new Scanner(System.in);
         int opcion = -1;
-        
+
         while (true) {
             for (int i = 0; i < opciones.length; i++) {
                 System.out.println((i + 1) + ". " + opciones[i]);
@@ -181,27 +155,9 @@ public class Menu {
                 scanner.next(); // Limpiar la entrada inválida
             }
         }
-        
+
         return opciones[opcion];
     }
-
-    // public static String menuOpcionesString(String[] opts) {
-    //     boolean pass = false;
-    //     int opt;
-    //     Scanner r = new Scanner(System.in);
-    //     do {
-    //         for (int i = 0; i < opts.length; i++) {
-    //             System.out.println((i + 1) + ". " + opts[i]);
-    //         }
-    //         System.out.print("Escriba su opcion: ");
-    //         opt = r.nextInt();
-    //         if (opt >= 0 && opt < opts.length)
-    //             pass = true;
-
-    //     } while (!pass);
-    //     r.close();
-    //     return opts[opt];
-    // }
 
     public static String input(String atr) {
         Scanner r = new Scanner(System.in);

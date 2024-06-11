@@ -30,3 +30,5 @@ bin/
 
 ### CUSTOM FILES ###
 !**/src/Others/credentials.env
+.env
+src/Others/config.env
