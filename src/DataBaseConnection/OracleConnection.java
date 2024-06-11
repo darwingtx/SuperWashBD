@@ -1,5 +1,6 @@
 package DataBaseConnection;
 
+import Others.Util;
 import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
 
@@ -110,27 +111,14 @@ public class OracleConnection implements ConnectionBD {
     @Override
     public String listarRegistros() {
         String s = "";
-        if (connection != null) {
-            try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("SELECT lv.ID_LAVADOVEH, l.TIPO_LAVADO, lv.ID_VEHICULO, v.TIPO_VEHICULO, c.ID_CLIENTE, c.nombre, c.apellido, lv.precio  \n" +
-                         "FROM LAVADOVEHICULO lv\n" +
-                         "INNER JOIN CLIENTE c on lv.ID_CLIENTE = c.ID_CLIENTE\n" +
-                         "INNER JOIN VEHICULO v ON lv.ID_VEHICULO = v.ID_VEHICULO\n" +
-                         "INNER JOIN LAVADO l on lv.ID_Tipo_Lavado = l.ID_LAVADO")) {
+        if (connection!= null) {
+            try (Statement statement = connection.createStatement()) { // <--- Fix: ) instead of {
                 System.out.println("Seleccionando...");
-                showResponse(resultSet);
-                while (resultSet.next()) {
-                    s += "ID_LAVADOVEH: " + resultSet.getInt("ID_LAVADOVEH") + "\n";
-                    s += "TIPO_LAVADO: " + resultSet.getString("TIPO_LAVADO") + "\n";
-                    s += "ID_VEHICULO: " + resultSet.getString("ID_VEHICULO") + "\n";
-                    s += "TIPO_VEHICULO: " + resultSet.getString("TIPO_VEHICULO") + "\n";
-                    s += "ID_CLIENTE: " + resultSet.getInt("ID_CLIENTE") + "\n";
-                    s += "NOMBRE: " + resultSet.getString("NOMBRE") + "\n";
-                    s += "APELLIDO: " + resultSet.getString("APELLIDO") + "\n";
-                    s += "PRECIO: " + resultSet.getInt("PRECIO") + "\n";
-                    s += "------------------------\n";
-                }
-                //System.out.println(s);
+                return Util.showResponse(statement.executeQuery("SELECT lv.ID_LAVADOVEH, l.TIPO_LAVADO, lv.ID_VEHICULO, v.TIPO_VEHICULO, c.ID_CLIENTE, c.nombre, c.apellido, lv.precio  \n" +
+                        "FROM LAVADOVEHICULO lv\n" +
+                        "INNER JOIN CLIENTE c on lv.ID_CLIENTE = c.ID_CLIENTE\n" +
+                        "INNER JOIN VEHICULO v ON lv.ID_VEHICULO = v.ID_VEHICULO\n" +
+                        "INNER JOIN LAVADO l on lv.ID_Tipo_Lavado = l.ID_LAVADO"));
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("ERROR -> SQL Exception: " + e.getMessage());
@@ -141,54 +129,16 @@ public class OracleConnection implements ConnectionBD {
 
     @Override
     public String listarCLientes() {
-        String s = "";
         if (connection != null) {
-            try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
-                         "INNER JOIN tipo_cliente t on c.id_tipo_cliente = t.id_tipo_cliente")) {
-                System.out.println("Seleccionando...");
-                showResponse(resultSet);
-                //System.out.println(s);
+            try (Statement statement = connection.createStatement()){
+                return Util.showResponse(statement.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
+                        "INNER JOIN tipo_cliente t on c.id_tipo_cliente = t.id_tipo_cliente"));
             } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+                throw new RuntimeException(e);
             }
         }
-        return s;
+        return "no hay conexion";
     }
 
-    private void showResponse(ResultSet response) throws SQLException {
 
-        ResultSetMetaData resData = response.getMetaData();
-        int columnCount = resData.getColumnCount();
-
-        ArrayList<ArrayList<String>> data = new ArrayList<>();
-
-        ArrayList<ColumnFormat> columnsFormat = new ArrayList<>();
-
-
-        // extract data
-        int[] maxLenghtColumn = new int[columnCount];
-        for (int i = 0; i < columnCount; i++) {
-            maxLenghtColumn[i] = resData.getColumnName(i + 1).length();
-        }
-
-        int row = 0;
-        while (response.next()) {
-            ArrayList<String> rowData = new ArrayList<>();
-            for (int i = 1; i <= columnCount; i++) {
-                String d = response.getObject(i) + "";
-                rowData.add(d);
-                if (d.length() > maxLenghtColumn[i - 1]) maxLenghtColumn[i - 1] = d.length();
-            }
-            data.add(rowData);
-            row++;
-        }
-
-        for (int i = 1; i <= columnCount; i++) {
-            columnsFormat.add(new ColumnFormat(maxLenghtColumn[i - 1], resData.getColumnName(i), ""));
-        }
-
-        System.out.print(new TerminalUtils(columnsFormat).printTable(data, false));
-    }
 }

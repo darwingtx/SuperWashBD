@@ -1,5 +1,6 @@
 package DataBaseConnection;
 
+import Others.Util;
 import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
 
@@ -60,7 +61,7 @@ public class MariadbConnection implements ConnectionBD{
     @Override
     public String listarCLientes() {
         try {
-            return showResponse(query.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
+            return Util.showResponse(query.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
                     "INNER JOIN tipo_cliente t on c.id_tipo_cliente = t.id_tipo_cliente"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -70,7 +71,7 @@ public class MariadbConnection implements ConnectionBD{
     @Override
     public String listarRegistros() {
         try {
-            return showResponse(query.executeQuery("SELECT \n" +
+            return Util.showResponse(query.executeQuery("SELECT \n" +
                     "    lv.id_lavado_veh, \n" +
                     "    l.tipo_lavado, \n" +
                     "    lv.id_vehiculo, \n" +
@@ -124,39 +125,4 @@ public class MariadbConnection implements ConnectionBD{
         return tipos.toArray(new String[0]);
     }
 
-    // utility: show the response in a table
-    private String showResponse(ResultSet response) throws SQLException {
-
-        if (response == null) return "Empty Set";
-
-        ResultSetMetaData resData = response.getMetaData();
-
-        int columnCount  = resData.getColumnCount();
-        ArrayList<ArrayList<String>> data = new ArrayList<>();
-        ArrayList<ColumnFormat> columnsFormat = new ArrayList<>();
-
-        // extract data
-        int[] maxLengthColumn = new int[columnCount];
-        for (int i = 0; i < columnCount; i++) {
-            maxLengthColumn[i] = resData.getColumnName(i+1).length();
-        }
-
-        int row = 0;
-        while (response.next()) {
-            ArrayList<String> rowData = new ArrayList<>();
-            for (int i = 1; i <= columnCount; i++) {
-                String d = response.getObject(i) + "";
-                rowData.add(d);
-                if (d.length() > maxLengthColumn[i-1]) maxLengthColumn[i-1] = d.length();
-            }
-            data.add(rowData);
-            row++;
-        }
-
-        for (int i = 1; i <= columnCount; i++) {
-            columnsFormat.add(new ColumnFormat(maxLengthColumn[i-1], resData.getColumnName(i), ""));
-        }
-
-        return new TerminalUtils(columnsFormat).printTable(data, false);
-    }
 }

@@ -77,11 +77,11 @@ public class Menu {
                     break;
 
                 case "Listar Registros de Lavado ":
-                    x.listarRegistros();
+                    System.out.println(x.listarRegistros());
                     break;
 
                 case "Listar clientes":
-                    x.listarCLientes();
+                    System.out.println(x.listarCLientes());
                     break;
 
                 default:
