@@ -1,7 +1,6 @@
 package DataBaseConnection;
 
 import Others.Util;
-import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
 
 import java.sql.*;

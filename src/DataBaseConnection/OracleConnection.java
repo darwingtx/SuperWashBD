@@ -1,7 +1,6 @@
 package DataBaseConnection;
 
 import Others.Util;
-import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
 
 import java.sql.*;
@@ -39,6 +38,7 @@ public class OracleConnection implements ConnectionBD {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             connection = DriverManager.getConnection(url, usr, pass);
             TerminalUtils.infoTrace("------[+] Conexión Exitosa!------");
+            return this;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("ERROR -> Clase del controlador no encontrada: " + e.getMessage());

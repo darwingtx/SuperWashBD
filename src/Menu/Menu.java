@@ -35,21 +35,26 @@ public class Menu {
                         System.getenv("DB_NAME"),
                         System.getenv("DB_USR"),
                         System.getenv("DB_PASS"));
-                db.connect();
+                db = db.connect();
                 menuDB(db, opts);
 
                 break;
 
             case "Trabajara con Oracle Database":
-                db = new  OracleConnection(
+                db = new OracleConnection(
                         System.getenv("DB_HOST"),
                         Integer.parseInt(System.getenv("DB_PORT")),
                         System.getenv("DB_NAME"),
                         System.getenv("DB_USR"),
                         System.getenv("DB_PASS"));
+                db = db.connect();
+                if(db==null){
+                    System.out.println("gsdfgsdf");
+                }else {
+                    menuDB(db, opts);
+                }
 
-                db.connect();
-                menuDB(db, opts);
+
                 break;
             default:
                 break;
@@ -91,10 +96,9 @@ public class Menu {
     }
 
 
-
     public static Cliente obtenerCliente() {
         Cliente c;
-        String[] tipo_cliente = { "Estandar", "Premiun" };
+        String[] tipo_cliente = {"Estandar", "Premiun"};
         c = new Cliente(input("id cliente"), menuOpciones(tipo_cliente), input("nombre"), input("apellido"),
                 input("Telefono"), input("descuento"));
         return c;
@@ -102,7 +106,7 @@ public class Menu {
 
     public static Vehiculo obtenerVehiculo() {
         Vehiculo v;
-        String[] marca = { "Mercedez ven10", "whatsapp", "taxi" };
+        String[] marca = {"Mercedez ven10", "whatsapp", "taxi"};
         v = new Vehiculo(input("Id vehiculo"), input("id cliente"), menuOpcionesString(marca),
                 inputInt("Tipo_vehiculo"));
         return v;
