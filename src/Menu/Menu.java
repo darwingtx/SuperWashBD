@@ -3,6 +3,7 @@ package Menu;
 import DataSchema.*;
 
 import DataBaseConnection.*;
+import terminalUtils.TerminalUtils;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -36,8 +37,11 @@ public class Menu {
                         System.getenv("DB_USR"),
                         System.getenv("DB_PASS"));
                 db = db.connect();
-                menuDB(db, opts);
-
+                if(db==null){
+                    TerminalUtils.infoTrace("------[+] Conexión Erronea!, verifica credenciales------");
+                }else {
+                    menuDB(db, opts);
+                }
                 break;
 
             case "Trabajara con Oracle Database":
@@ -49,12 +53,10 @@ public class Menu {
                         System.getenv("DB_PASS"));
                 db = db.connect();
                 if(db==null){
-                    System.out.println("gsdfgsdf");
+                    TerminalUtils.infoTrace("------[+] Conexión Erronea!, verifica credenciales------");
                 }else {
                     menuDB(db, opts);
                 }
-
-
                 break;
             default:
                 break;
@@ -83,6 +85,7 @@ public class Menu {
 
                 case "Listar Registros de Lavado ":
                     System.out.println(x.listarRegistros());
+
                     break;
 
                 case "Listar clientes":
