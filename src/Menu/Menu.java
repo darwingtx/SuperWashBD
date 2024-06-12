@@ -111,15 +111,15 @@ public class Menu {
         Vehiculo v;
         String[] marca = {"Mercedez ven10", "whatsapp", "taxi"};
         v = new Vehiculo(input("Id vehiculo"), input("id cliente"), menuOpcionesString(marca),
-                inputInt("Tipo_vehiculo"));
+                input("Tipo_vehiculo"));
         return v;
     }
 
     public static Lavado obtenerLavado() {
-        Lavado l;
+        Lavado l = null;
 
-        l = new Lavado(input("id Lavado"), input("id vehiculo"), inputInt(null), inputInt(null), input("Precio"),
-                input("Duracion"));
+        //l = new Lavado(input("id Lavado"), input("id vehiculo"), inputInt(null), inputInt(null), input("Precio"),
+                //input("Duracion"));
         return l;
     }
 

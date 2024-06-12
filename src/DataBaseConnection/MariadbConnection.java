@@ -1,5 +1,8 @@
 package DataBaseConnection;
 
+import DataSchema.Cliente;
+import DataSchema.Lavado;
+import DataSchema.Vehiculo;
 import Others.Util;
 import terminalUtils.TerminalUtils;
 
@@ -122,6 +125,30 @@ public class MariadbConnection implements ConnectionBD{
             }
         }
         return tipos.toArray(new String[0]);
+    }
+
+    @Override
+    public void insertClient(Cliente client) {
+
+    }
+
+    @Override
+    public void insertVeh(Vehiculo veh) {
+        String query = "BEGIN insertar_vehiculo (?, ?, ?); END;";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, veh.getId_vehiculo());
+            pstmt.setString(2, veh.getMarca());
+            pstmt.setString(3, veh.getTipo_vehiculo());
+            pstmt.execute();
+            TerminalUtils.infoTrace("Vehiculo insertado");
+        } catch (SQLException e) {
+            TerminalUtils.infoTrace("Error al insertar: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void insertLavado(Lavado lav) {
+
     }
 
 }

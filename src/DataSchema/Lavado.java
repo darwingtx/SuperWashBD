@@ -1,35 +1,22 @@
 package DataSchema;
 
 public class Lavado {
-    String id_lavado, id_vehiclo;
-    int tipo_lavado, tipo_vehiculo;  
 
-    String precio, duracion;
+    private int id_cliente, tipo_lavado;
+    private String id_vehiculo;
 
-    public Lavado(String id_lavado, String id_vehiclo, int tipo_lavado, int tipo_vahiculo, String precio,
-            String duracion) {
-        this.id_lavado = id_lavado;
-        this.id_vehiclo = id_vehiclo;
+    public Lavado(int tipo_lavado, int id_cliente, String id_vehiculo) {
         this.tipo_lavado = tipo_lavado;
-        this.tipo_vehiculo = tipo_vahiculo;
-        this.precio = precio;
-        this.duracion = duracion;
+        this.id_cliente = id_cliente;
+        this.id_vehiculo = id_vehiculo;
     }
 
-    public String getId_lavado() {
-        return id_lavado;
+    public int getId_cliente() {
+        return id_cliente;
     }
 
-    public void setId_lavado(String id_lavado) {
-        this.id_lavado = id_lavado;
-    }
-
-    public String getId_vehiclo() {
-        return id_vehiclo;
-    }
-
-    public void setId_vehiclo(String id_vehiclo) {
-        this.id_vehiclo = id_vehiclo;
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
     }
 
     public int getTipo_lavado() {
@@ -40,30 +27,11 @@ public class Lavado {
         this.tipo_lavado = tipo_lavado;
     }
 
-    public int getTipo_vehiculo() {
-        return tipo_vehiculo;
+    public String getId_vehiculo() {
+        return id_vehiculo;
     }
 
-    public void setTipo_vehiculo(int tipo_vahiculo) {
-        this.tipo_vehiculo = tipo_vahiculo;
+    public void setId_vehiculo(String id_vehiculo) {
+        this.id_vehiculo = id_vehiculo;
     }
-
-    public String getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(String precio) {
-        this.precio = precio;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
-    }
-
-    
-
 }

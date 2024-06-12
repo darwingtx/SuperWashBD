@@ -32,3 +32,4 @@ bin/
 !**/src/Others/credentials.env
 .env
 src/Others/config.env
+.idea/workspace.xml
