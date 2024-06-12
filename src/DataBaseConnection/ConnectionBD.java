@@ -3,6 +3,7 @@ package DataBaseConnection;
 import DataSchema.Cliente;
 import DataSchema.Lavado;
 import DataSchema.Vehiculo;
+import java.util.Map;
 
 public interface ConnectionBD {
 
@@ -12,9 +13,9 @@ public interface ConnectionBD {
 
     public String listarRegistros();
 
-    public String[] tipoLavado();
+    public Map tipoLavado();
 
-    public String[] tipoCliente();
+    public Map tipoCliente();
 
     public void insertClient(Cliente client);
 

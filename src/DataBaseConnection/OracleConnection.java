@@ -10,8 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
 
 public class OracleConnection implements ConnectionBD {
     // atributes
@@ -81,21 +82,21 @@ public class OracleConnection implements ConnectionBD {
 
 
     @Override
-    public String[] tipoCliente() {
-        List<String> tipos = new ArrayList<>();
+    public Map tipoCliente() {
+        Map<String, Integer> tipos = new HashMap<>();
         if (connection != null) {
             try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("Select nombre from Tipo_Cliente")) {
+                 ResultSet resultSet = statement.executeQuery("Select * from Tipo_Cliente")) {
                 System.out.println("Seleccionando...");
                 while (resultSet.next()) {
-                    tipos.add(resultSet.getString("nombre"));
+                    tipos.putIfAbsent(resultSet.getString("nombre"), resultSet.getInt("id_tipo_cliente"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("ERROR -> SQL Exception: " + e.getMessage());
             }
         }
-        return tipos.toArray(new String[0]);
+        return tipos;
     }
 
     @Override
@@ -143,21 +144,21 @@ public class OracleConnection implements ConnectionBD {
     }
 
     @Override
-    public String[] tipoLavado() {
-        List<String> tipos = new ArrayList<>();
+    public Map tipoLavado() {
+        Map<String, Integer> tipos = new HashMap<>();
         if (connection != null) {
             try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("Select TIPO_LAVADO from Lavado")) {
+                 ResultSet resultSet = statement.executeQuery("Select * from Lavado")) {
                 System.out.println("Seleccionando...");
                 while (resultSet.next()) {
-                    tipos.add(resultSet.getString("TIPO_LAVADO"));
+                    tipos.putIfAbsent(resultSet.getString("TIPO_LAVADO"), resultSet.getInt("ID_LAVADO"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("ERROR -> SQL Exception: " + e.getMessage());
             }
         }
-        return tipos.toArray(new String[0]);
+        return tipos;
     }
 
     @Override
