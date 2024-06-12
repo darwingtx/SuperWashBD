@@ -130,11 +130,11 @@ public class OracleConnection implements ConnectionBD {
 
     @Override
     public void insertLavado(Lavado lav) {
-        String query = "BEGIN insertar_lavado_vehiculo (?, ?,?); END;";
+        String query = "BEGIN insertar_lavado_vehiculo (?,?,?); END;";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, Integer.parseInt(lav.getId_lavado()));
-            pstmt.setString(2, lav.getId_vehiclo());
-            pstmt.setInt(3, Integer.parseInt(lav.getId_Cliente()));
+            pstmt.setInt(1, lav.getTipo_lavado());
+            pstmt.setString(2, lav.getId_vehiculo());
+            pstmt.setInt(3, lav.getId_cliente());
             pstmt.execute();
             TerminalUtils.infoTrace("Registro lavado insertado");
         } catch (SQLException e) {

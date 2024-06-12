@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
      //Menu menu = new Menu();
      //menu.menu();
-        Lavado x = new Lavado("GHI789", 2, "Carro", "105151515");
+        Lavado x = new Lavado(2, 1015332154,"ABC123");
         OracleConnection db = new OracleConnection(
                 System.getenv("DB_HOST"),
                 Integer.parseInt(System.getenv("DB_PORT")),

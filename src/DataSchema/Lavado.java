@@ -1,40 +1,22 @@
 package DataSchema;
 
 public class Lavado {
-    String id_lavado, id_vehiclo, id_Cliente,tipo_vehiculo;
-    int tipo_lavado;
 
+    private int id_cliente, tipo_lavado;
+    private String id_vehiculo;
 
-    public String getId_Cliente() {
-        return id_Cliente;
-    }
-
-    public void setId_Cliente(String id_Cliente) {
-        this.id_Cliente = id_Cliente;
-    }
-
-    public Lavado(String id_vehiclo, int tipo_lavado, String tipo_vahiculo, String id_Cliente) {
-        this.id_lavado = "";
-        this.id_vehiclo = id_vehiclo;
+    public Lavado(int tipo_lavado, int id_cliente, String id_vehiculo) {
         this.tipo_lavado = tipo_lavado;
-        this.tipo_vehiculo = tipo_vahiculo;
-        this.id_Cliente = id_Cliente;
+        this.id_cliente = id_cliente;
+        this.id_vehiculo = id_vehiculo;
     }
 
-    public String getId_lavado() {
-        return id_lavado;
+    public int getId_cliente() {
+        return id_cliente;
     }
 
-    public void setId_lavado(String id_lavado) {
-        this.id_lavado = id_lavado;
-    }
-
-    public String getId_vehiclo() {
-        return id_vehiclo;
-    }
-
-    public void setId_vehiclo(String id_vehiclo) {
-        this.id_vehiclo = id_vehiclo;
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
     }
 
     public int getTipo_lavado() {
@@ -45,14 +27,11 @@ public class Lavado {
         this.tipo_lavado = tipo_lavado;
     }
 
-    public String getTipo_vehiculo() {
-        return tipo_vehiculo;
+    public String getId_vehiculo() {
+        return id_vehiculo;
     }
 
-    public void setTipo_vehiculo(String tipo_vahiculo) {
-        this.tipo_vehiculo = tipo_vahiculo;
+    public void setId_vehiculo(String id_vehiculo) {
+        this.id_vehiculo = id_vehiculo;
     }
-
-    
-
 }
