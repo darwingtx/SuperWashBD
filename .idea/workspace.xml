@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c7d9b15d-319f-4260-8974-5d5f3c49ae26" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBaseConnection/OracleConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,13 +52,15 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;Application.credencialesBD.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Desarrollo&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Others/config.env&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Users/Usuario/Documents/NetBeansProjects/Taller1/PrySistVentas&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/abela/Documents/ProyectosJava/SuperWashBD/src/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
@@ -78,7 +78,31 @@
       <recent name="C:\Users\Andre\Desktop\SuperWashBD" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Unnamed">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <envs>
+        <env name="DB_HOST" value="127.0.0.1" />
+        <env name="DB_PORT" value="1521" />
+        <env name="DB_NAME" value="SQLFinal" />
+        <env name="DB_USR" value="PARZ" />
+        <env name="DB_PASS" value="1015332154" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
+      <module name="SuperWashBD" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="credencialesBD" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="SuperWashBD" />
@@ -97,6 +121,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.credencialesBD" />
+      <item itemvalue="Application.Unnamed" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -107,6 +143,8 @@
       <option name="presentableId" value="Default" />
       <updated>1717690892584</updated>
       <workItem from="1717724119367" duration="137000" />
+      <workItem from="1718141792564" duration="71000" />
+      <workItem from="1718142326119" duration="99000" />
     </task>
     <servers />
   </component>
