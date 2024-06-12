@@ -3,12 +3,26 @@ package Others;
 import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Util {
+
+    public static void errorLog() throws FileNotFoundException {
+        File logFile = new File("errors.log");
+
+        if (logFile.exists()) {
+            logFile.delete();
+        }
+        PrintStream errorStream = new PrintStream(new FileOutputStream(logFile));
+        System.setErr(errorStream);
+    }
 
     public static String showResponse(ResultSet response) throws SQLException {
 

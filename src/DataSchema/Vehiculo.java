@@ -5,9 +5,9 @@ public class Vehiculo {
     String id_cliente;
 
     String marca;
-    int tipo_vehiculo;
+    String tipo_vehiculo;
 
-    public Vehiculo(String id_vehiculo, String id_cliente, String marca, int tipo_vehiculo) {
+    public Vehiculo(String id_vehiculo, String id_cliente, String marca, String tipo_vehiculo) {
         this.id_vehiculo = id_vehiculo;
         this.id_cliente = id_cliente;
         this.marca = marca;
@@ -38,11 +38,11 @@ public class Vehiculo {
         this.marca = marca;
     }
 
-    public int getTipo_vehiculo() {
+    public String getTipo_vehiculo() {
         return tipo_vehiculo;
     }
 
-    public void setTipo_vehiculo(int tipo_vehiculo) {
+    public void setTipo_vehiculo(String tipo_vehiculo) {
         this.tipo_vehiculo = tipo_vehiculo;
     }
     

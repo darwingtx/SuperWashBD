@@ -1,19 +1,24 @@
 package DataSchema;
 
 public class Lavado {
-    String id_lavado, id_vehiclo;
-    int tipo_lavado, tipo_vehiculo;  
+    String id_lavado, id_vehiclo, id_Cliente,tipo_vehiculo;
+    int tipo_lavado;
 
-    String precio, duracion;
 
-    public Lavado(String id_lavado, String id_vehiclo, int tipo_lavado, int tipo_vahiculo, String precio,
-            String duracion) {
-        this.id_lavado = id_lavado;
+    public String getId_Cliente() {
+        return id_Cliente;
+    }
+
+    public void setId_Cliente(String id_Cliente) {
+        this.id_Cliente = id_Cliente;
+    }
+
+    public Lavado(String id_vehiclo, int tipo_lavado, String tipo_vahiculo, String id_Cliente) {
+        this.id_lavado = "";
         this.id_vehiclo = id_vehiclo;
         this.tipo_lavado = tipo_lavado;
         this.tipo_vehiculo = tipo_vahiculo;
-        this.precio = precio;
-        this.duracion = duracion;
+        this.id_Cliente = id_Cliente;
     }
 
     public String getId_lavado() {
@@ -40,28 +45,12 @@ public class Lavado {
         this.tipo_lavado = tipo_lavado;
     }
 
-    public int getTipo_vehiculo() {
+    public String getTipo_vehiculo() {
         return tipo_vehiculo;
     }
 
-    public void setTipo_vehiculo(int tipo_vahiculo) {
+    public void setTipo_vehiculo(String tipo_vahiculo) {
         this.tipo_vehiculo = tipo_vahiculo;
-    }
-
-    public String getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(String precio) {
-        this.precio = precio;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
     }
 
     
