@@ -8,7 +8,9 @@ import terminalUtils.TerminalUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MariadbConnection implements ConnectionBD{
 
@@ -96,37 +98,40 @@ public class MariadbConnection implements ConnectionBD{
     }
 
     @Override
-    public String[] tipoLavado() {
-        List<String> tipos = new ArrayList<>();
-        if (connection!= null) {
-            try (ResultSet resultSet = query.executeQuery("Select tipo_lavado from lavado")) {
+    public Map tipoLavado() {
+        Map<String, Integer> tipos = new HashMap<>();
+        if (connection != null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("Select * from Lavado")) {
+                System.out.println("Seleccionando...");
                 while (resultSet.next()) {
-                    tipos.add(resultSet.getString(1));
+                    tipos.putIfAbsent(resultSet.getString("TIPO_LAVADO"), resultSet.getInt("ID_LAVADO"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("ERROR -> SQL Exception: " + e.getMessage());
             }
         }
-        return tipos.toArray(new String[0]);
+        return tipos;
     }
 
     @Override
-    public String[] tipoCliente() {
-        List<String> tipos = new ArrayList<>();
-        if (connection!= null) {
-            try (ResultSet resultSet = query.executeQuery("Select nombre from tipo_cliente")) {
+    public Map tipoCliente() {
+        Map<String, Integer> tipos = new HashMap<>();
+        if (connection != null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("Select nombre from Tipo_Cliente")) {
+                System.out.println("Seleccionando...");
                 while (resultSet.next()) {
-                    tipos.add(resultSet.getString(1));
+                    tipos.putIfAbsent(resultSet.getString("nombre"), resultSet.getInt("id_tipo_cliente"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("ERROR -> SQL Exception: " + e.getMessage());
             }
         }
-        return tipos.toArray(new String[0]);
+        return tipos;
     }
-
     @Override
     public void insertClient(Cliente client) {
 

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Util {
 
@@ -57,5 +58,15 @@ public class Util {
         }
 
         return new TerminalUtils(columnsFormat).printTable(data, false);
+    }
+
+    public static String[] convertMap(Map<String,Integer> x){
+        String[] s = new String[x.size()];
+        int i = 0;
+        for (Map.Entry<String, Integer> entry : x.entrySet()) {
+            s[i] = entry.getKey();
+            i++;
+        }
+        return s;
     }
 }
