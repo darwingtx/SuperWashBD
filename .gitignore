@@ -29,6 +29,8 @@ bin/
 .DS_Store
 
 ### CUSTOM FILES ###
-!**/src/Others/credentials.env
+src/Others/credentials.env
 .env
 src/Others/config.env
+./creds.env
+.idea/workspace.xml

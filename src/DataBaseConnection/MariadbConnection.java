@@ -4,28 +4,17 @@ import DataSchema.Cliente;
 import DataSchema.Lavado;
 import DataSchema.Vehiculo;
 import Others.Util;
-import terminalUtils.TerminalUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import static terminalUtils.TerminalUtils.*;
+
+
 public class MariadbConnection implements ConnectionBD{
-
-    /**
-     * TODO: ESTA VAINALOCA
-     * Triggers:
-     *   - cuando se inserte, enseguida calcular el valor dependiendo del tipo de vehiculo (moto, carro, camion), tipo de lavado (interior, exterior, completo) y tipo cliente (premiun 20%, estandar 0%)
-     *   -
-     * Procedimientos:
-     *   - insertar
-     *   - consultar datos
-    */
-
-
-    // atributes
+    
+    // attributes
     private String host;
     private int port;
     private String db;
@@ -33,11 +22,10 @@ public class MariadbConnection implements ConnectionBD{
     private String pass;
     private String url;
 
-    // atribute - connections- - querys
+    // attribute - connections- - query's
 
     Connection connection = null;
     Statement query = null;
-    ResultSet res = null;
 
     public MariadbConnection(String host, int port, String db, String usr, String pass) {
         this. host = host;
@@ -50,20 +38,30 @@ public class MariadbConnection implements ConnectionBD{
 
     public ConnectionBD connect() {
         this.url = "jdbc:mariadb://"+host+":"+port+"/"+db+"?user="+usr+"&password="+pass;
-        TerminalUtils.infoTrace("Trying to connect. url: " + url);
+        infoTrace("Trying to connect. url: " + url);
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             connection = DriverManager.getConnection(url);
-            TerminalUtils.successTrace("Connection Successfully!");
             query = connection.createStatement();
+            successTrace("Connection Successfully!");
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return this;
+    }
+
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
-    public String listarCLientes() {
+    public String listarClientes() {
         try {
             return Util.showResponse(query.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
                     "INNER JOIN tipo_cliente t on c.id_tipo_cliente = t.id_tipo_cliente"));
@@ -102,14 +100,13 @@ public class MariadbConnection implements ConnectionBD{
         Map<String, Integer> tipos = new HashMap<>();
         if (connection != null) {
             try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("Select * from Lavado")) {
-                System.out.println("Seleccionando...");
+                 ResultSet resultSet = statement.executeQuery("Select * from lavado")) {
                 while (resultSet.next()) {
                     tipos.putIfAbsent(resultSet.getString("TIPO_LAVADO"), resultSet.getInt("ID_LAVADO"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+               errorTrace(e.getMessage(), true);
             }
         }
         return tipos;
@@ -119,41 +116,59 @@ public class MariadbConnection implements ConnectionBD{
     public Map tipoCliente() {
         Map<String, Integer> tipos = new HashMap<>();
         if (connection != null) {
-            try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("Select nombre from Tipo_Cliente")) {
-                System.out.println("Seleccionando...");
-                while (resultSet.next()) {
-                    tipos.putIfAbsent(resultSet.getString("nombre"), resultSet.getInt("id_tipo_cliente"));
-                }
+            try (ResultSet res = query.executeQuery("select id_tipo_cliente, nombre from tipo_cliente")) {
+                while (res.next())
+                    tipos.putIfAbsent(res.getString("nombre"), res.getInt("id_tipo_cliente"));
+
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+                errorTrace(e.getMessage(), true);
             }
         }
         return tipos;
     }
     @Override
     public void insertClient(Cliente client) {
-
+        String query = "CALL insertar_cliente (?, ?, ?, ?, ?);";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, client.getId_cliente());
+            pstmt.setInt(2, client.getTipoCliente());
+            pstmt.setString(3, client.getNombre());
+            pstmt.setString(4, client.getApellido());
+            pstmt.setString(5, client.getTel());
+            pstmt.execute();
+            successTrace("Cliente insertado");
+        } catch (SQLException e) {
+            errorTrace(e.getMessage(), true);
+        }
     }
 
     @Override
     public void insertVeh(Vehiculo veh) {
-        String query = "BEGIN insertar_vehiculo (?, ?, ?); END;";
+        String query = "CALL insertar_vehiculo (?, ?, ?);";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, veh.getId_vehiculo());
             pstmt.setString(2, veh.getMarca());
             pstmt.setString(3, veh.getTipo_vehiculo());
             pstmt.execute();
-            TerminalUtils.infoTrace("Vehiculo insertado");
+            successTrace("Vehiculo insertado");
         } catch (SQLException e) {
-            TerminalUtils.infoTrace("Error al insertar: " + e.getMessage());
+            errorTrace(e.getMessage(), true);
         }
     }
 
     @Override
     public void insertLavado(Lavado lav) {
-
+        String query = "CALL insertar_lavado_vehiculo (?,?,?);";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, lav.getTipo_lavado());
+            pstmt.setString(2, lav.getId_vehiculo());
+            pstmt.setInt(3, lav.getId_cliente());
+            pstmt.execute();
+            successTrace("Registro de lavado insertado");
+        } catch (SQLException e) {
+            errorTrace(e.getMessage(), true);
+        }
     }
 
 }

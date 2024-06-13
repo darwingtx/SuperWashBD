@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class OracleConnection implements ConnectionBD {
-    // atributes
+    // attributes
     final String host;
     final int port;
     final String db;
@@ -23,7 +23,7 @@ public class OracleConnection implements ConnectionBD {
     final String pass;
     final String url;
 
-    // atribute - connections- - querys
+    // attribute - connections- - query's
 
     Connection connection = null;
     Statement query = null;
@@ -111,7 +111,7 @@ public class OracleConnection implements ConnectionBD {
             pstmt.execute();
             TerminalUtils.infoTrace("Cliente insertado");
         } catch (SQLException e) {
-            TerminalUtils.infoTrace("Error al insertarx: " + e.getMessage());
+            TerminalUtils.infoTrace("Error al insertar: " + e.getMessage());
         }
     }
 
@@ -181,7 +181,7 @@ public class OracleConnection implements ConnectionBD {
     }
 
     @Override
-    public String listarCLientes() {
+    public String listarClientes() {
         if (connection != null) {
             try (Statement statement = connection.createStatement()) {
                 return Util.showResponse(statement.executeQuery("SELECT c.ID_CLIENTE, c.NOMBRE, APELLIDO, t.nombre as Tipo_Cliente, c.telefono from cliente c\n" +
@@ -190,7 +190,7 @@ public class OracleConnection implements ConnectionBD {
                 throw new RuntimeException(e);
             }
         }
-        return "no hay conexion";
+        return "no hay connexion";
     }
 
 

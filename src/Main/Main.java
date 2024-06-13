@@ -1,18 +1,18 @@
 package Main;
 
-
 import DataBaseConnection.OracleConnection;
+import DataSchema.Cliente;
+import DataSchema.Lavado;
+import DataSchema.Vehiculo;
 import Menu.Menu;
-import Others.Util;
-
-import java.util.Map;
-import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
      //Menu menu = new Menu();
-     //menu.menu();
-       OracleConnection db = new OracleConnection(
+     Menu.menu();
+     /*
+        Lavado x = new Lavado("GHI789", 2, "Carro", "105151515");
+        OracleConnection db = new OracleConnection(
                 System.getenv("DB_HOST"),
                 Integer.parseInt(System.getenv("DB_PORT")),
                 System.getenv("DB_NAME"),
@@ -32,5 +32,6 @@ public class Main {
 
 
         System.out.println(s[0]);
+      */
     }
 }
