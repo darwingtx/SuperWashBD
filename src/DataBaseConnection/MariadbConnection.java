@@ -97,6 +97,14 @@ public class MariadbConnection implements ConnectionBD{
         }
     }
 
+    public String listarVehiculos() {
+        try {
+            return Util.showResponse(query.executeQuery("SELECT * FROM vehiculo" ));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public Map tipoLavado() {
         Map<String, Integer> tipos = new HashMap<>();

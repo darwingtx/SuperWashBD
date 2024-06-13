@@ -161,6 +161,8 @@ public class OracleConnection implements ConnectionBD {
         }
     }
 
+
+
     @Override
     public Map tipoLavado() {
         Map<String, Integer> tipos = new HashMap<>();
@@ -210,5 +212,13 @@ public class OracleConnection implements ConnectionBD {
         return "no hay connexion";
     }
 
+    @Override
+    public String listarVehiculos() {
+        try {
+            return Util.showResponse(query.executeQuery("SELECT * FROM Vehiculo" ));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -26,4 +26,5 @@ public interface ConnectionBD {
     public void insertLavado(Lavado lav);
 
 
+    public String listarVehiculos();
 }

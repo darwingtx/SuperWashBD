@@ -77,7 +77,7 @@ public class Menu {
                     break;
 
                 case "Ingresar Vehiculo":
-                    Vehiculo veh = obtenerVehiculo();
+                    Vehiculo veh = obtenerVehiculo(x);
                     x.insertVeh(veh);
                     break;
 
@@ -92,7 +92,10 @@ public class Menu {
 
                 case "Listar clientes":
                     System.out.println(x.listarClientes()+"\n");
+                    break;
 
+                case "Listar vehiculos":
+                    System.out.println(x.listarVehiculos());
                     break;
 
                 default:
