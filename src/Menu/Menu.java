@@ -14,9 +14,10 @@ public class Menu {
         final String[] opts = {
                 "Ingresar cliente",
                 "Ingresar Vehiculo",
-                "Ingresar Registro de Lavado ",
-                "Listar Registros de Lavado ",
+                "Ingresar Registro de Lavado",
+                "Listar Registros de Lavado",
                 "Listar clientes",
+                "[debug] Listar todo",
                 "Salir"
         };
         final String[] tConx = {
@@ -38,9 +39,9 @@ public class Menu {
                         System.getenv("DB_USR"),
                         System.getenv("DB_PASS"));
                 db = db.connect();
-                if (db == null) {
-                    TerminalUtils.infoTrace("------[+] Conexión Erronea!, verifica credenciales------");
-                } else {
+                if(db==null){
+                    TerminalUtils.errorTrace("Conexión Errónea! verifica credenciales");
+                }else {
                     menuDB(db, opts);
                 }
                 break;
@@ -52,9 +53,9 @@ public class Menu {
                         "PARZ",
                         "1015332154");
                 db = db.connect();
-                if (db == null) {
-                    TerminalUtils.infoTrace("------[+] Conexión Erronea!, verifica credenciales------");
-                } else {
+                if(db==null){
+                    TerminalUtils.infoTrace("Conexión Erronea!, verifica credenciales");
+                }else {
                     menuDB(db, opts);
                 }
                 break;
@@ -65,7 +66,6 @@ public class Menu {
 
     private static void menuDB(ConnectionBD x, String[] opts) {
         while (true) {
-
             switch (menuOpcionesString(opts)) {
                 case "Salir":
                     System.exit(0);
@@ -77,23 +77,27 @@ public class Menu {
                     break;
 
                 case "Ingresar Vehiculo":
-                    Vehiculo vehiculo = obtenerVehiculo();
-                    x.insertVeh(vehiculo);
-
+                    // x.insertVeh(new Vehiculo("ABC103", "", "Yamaha", "Moto"));
                     break;
 
-                case "Ingresar Registro de Lavado ":
-                    Lavado lavado = obtenerLavado();
-                    x.insertLavado(lavado);
+                case "Ingresar Registro de Lavado":
+                    // x.insertLavado(new Lavado(3, 3363732, "ABC103"));
                     break;
 
-                case "Listar Registros de Lavado ":
-                    System.out.println(x.listarRegistros());
+                case "Listar Registros de Lavado":
+                    // System.out.println(x.listarRegistros());
 
                     break;
 
                 case "Listar clientes":
-                    System.out.println(x.listarCLientes());
+                    // System.out.println(x.listarClientes());
+                    break;
+
+                case "[debug] Listar todo": // puede borrar esto después.
+                    System.out.println(x.tipoLavado().toString());
+                    System.out.println(x.tipoCliente().toString());
+                    System.out.println(x.listarRegistros());
+                    System.out.println(x.listarClientes());
                     break;
 
                 default:
@@ -106,7 +110,7 @@ public class Menu {
         Cliente c;
         String[] tipo_cliente = { "Estandar", "Premiun" };
         c = new Cliente(input("id cliente"), menuOpciones(tipo_cliente), input("nombre"), input("apellido"),
-                input("Telefono"), input("descuento"));
+                input("Teléfono"), input("descuento"));
         return c;
     }
 

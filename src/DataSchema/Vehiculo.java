@@ -3,7 +3,6 @@ package DataSchema;
 public class Vehiculo {
     String id_vehiculo;
     String id_cliente;
-
     String marca;
     String tipo_vehiculo;
 

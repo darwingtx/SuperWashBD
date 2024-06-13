@@ -1,5 +1,6 @@
 package Others;
 
+import terminalUtils.Colours;
 import terminalUtils.ColumnFormat;
 import terminalUtils.TerminalUtils;
 
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Util {
+
+    public static String[] cls = {Colours.R, Colours.Y, Colours.G, Colours.B, Colours.P};
+    public static int colourIndex = 0;
 
     public static void errorLog() throws FileNotFoundException {
         File logFile = new File("errors.log");
@@ -54,7 +58,8 @@ public class Util {
         }
 
         for (int i = 1; i <= columnCount; i++) {
-            columnsFormat.add(new ColumnFormat(maxLengthColumn[i-1], resData.getColumnName(i), ""));
+            if (colourIndex == cls.length) colourIndex = 0;
+            columnsFormat.add(new ColumnFormat(maxLengthColumn[i-1], resData.getColumnName(i), cls[colourIndex++]));
         }
 
         return new TerminalUtils(columnsFormat).printTable(data, false);

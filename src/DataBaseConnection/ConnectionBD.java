@@ -9,7 +9,7 @@ public interface ConnectionBD {
 
     public ConnectionBD connect();
 
-    public String listarCLientes();
+    public String listarClientes();
 
     public String listarRegistros();
 
