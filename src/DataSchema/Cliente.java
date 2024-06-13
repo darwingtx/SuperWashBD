@@ -6,21 +6,16 @@ public class Cliente {
     int tipo_cliente;
     String nombre;
     String apellido;
-
     String tel;
 
-    String descuento;
 
 
-
-    public Cliente(String id_cliente, int tipoCliente, String nombre, String apellido, String tel,
-                   String descuento) {
+    public Cliente(String id_cliente, int tipoCliente, String nombre, String apellido, String tel) {
         this.id_cliente = id_cliente;
         this.tipo_cliente = tipoCliente;
         this.nombre = nombre;
         this.apellido = apellido;
         this.tel = tel;
-        this.descuento = descuento;
     }
 
     public String getId_cliente() {
@@ -63,11 +58,4 @@ public class Cliente {
         this.tel = tel;
     }
 
-    public String getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(String descuento) {
-        this.descuento = descuento;
-    }
 }

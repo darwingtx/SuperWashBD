@@ -7,12 +7,13 @@ import Others.Util;
 import terminalUtils.TerminalUtils;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+
+import static terminalUtils.TerminalUtils.successTrace;
 
 public class OracleConnection implements ConnectionBD {
     // attributes
@@ -71,7 +72,7 @@ public class OracleConnection implements ConnectionBD {
 
     private Boolean executeQuery(String query) {
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)){
+             ResultSet resultSet = statement.executeQuery(query)) {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,14 +83,31 @@ public class OracleConnection implements ConnectionBD {
 
 
     @Override
+    public String[] tipoVehiculo() {
+        List<String> tipos = new ArrayList<>();
+        if (connection != null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("Select DISTINCT Tipo_Vehiculo from vehiculo")) {
+                System.out.println("Seleccionando...");
+                while (resultSet.next()) {
+                    tipos.add(resultSet.getString("Tipo_Vehiculo"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+        return tipos.toArray(new String[0]);
+    }
+
+    @Override
     public Map tipoCliente() {
         Map<String, Integer> tipos = new HashMap<>();
         if (connection != null) {
             try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("Select * from Tipo_Cliente")) {
-                System.out.println("Seleccionando...");
+                 ResultSet resultSet = statement.executeQuery("Select * from Lavado")) {
                 while (resultSet.next()) {
-                    tipos.putIfAbsent(resultSet.getString("nombre"), resultSet.getInt("id_tipo_cliente"));
+                    tipos.putIfAbsent(resultSet.getString("TIPO_LAVADO"), resultSet.getInt("ID_LAVADO"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -137,7 +155,7 @@ public class OracleConnection implements ConnectionBD {
             pstmt.setString(2, lav.getId_vehiculo());
             pstmt.setInt(3, lav.getId_cliente());
             pstmt.execute();
-            TerminalUtils.infoTrace("Registro lavado insertado");
+            successTrace("Registro lavado insertado");
         } catch (SQLException e) {
             TerminalUtils.infoTrace("Error al insertar: " + e.getMessage());
         }
@@ -149,7 +167,6 @@ public class OracleConnection implements ConnectionBD {
         if (connection != null) {
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery("Select * from Lavado")) {
-                System.out.println("Seleccionando...");
                 while (resultSet.next()) {
                     tipos.putIfAbsent(resultSet.getString("TIPO_LAVADO"), resultSet.getInt("ID_LAVADO"));
                 }

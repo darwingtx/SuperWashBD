@@ -17,9 +17,13 @@ public interface ConnectionBD {
 
     public Map tipoCliente();
 
+    public String[] tipoVehiculo();
+
     public void insertClient(Cliente client);
 
     public void insertVeh(Vehiculo veh);
 
     public void insertLavado(Lavado lav);
+
+
 }

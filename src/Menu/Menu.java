@@ -3,10 +3,9 @@ package Menu;
 import DataSchema.*;
 
 import DataBaseConnection.*;
+import Others.Util;
 import terminalUtils.TerminalUtils;
-
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Menu {
@@ -17,7 +16,7 @@ public class Menu {
                 "Ingresar Registro de Lavado",
                 "Listar Registros de Lavado",
                 "Listar clientes",
-                "[debug] Listar todo",
+                "Listar vehiculos",
                 "Salir"
         };
         final String[] tConx = {
@@ -48,10 +47,11 @@ public class Menu {
 
             case "Trabajara con Oracle Database":
                 db = new OracleConnection(
-                        "127.0.0.1", 1521,
-                        "SQLFinal",
-                        "PARZ",
-                        "1015332154");
+                        System.getenv("DB_HOST"),
+                        Integer.parseInt(System.getenv("DB_PORT")),
+                        System.getenv("DB_NAME"),
+                        System.getenv("DB_USR"),
+                        System.getenv("DB_PASS"));
                 db = db.connect();
                 if(db==null){
                     TerminalUtils.infoTrace("Conexión Erronea!, verifica credenciales");
@@ -72,32 +72,27 @@ public class Menu {
                     break;
 
                 case "Ingresar cliente":
-                    Cliente cliente = obtenerCliente();
+                    Cliente cliente = obtenerCliente(x);
                     x.insertClient(cliente);
                     break;
 
                 case "Ingresar Vehiculo":
-                    // x.insertVeh(new Vehiculo("ABC103", "", "Yamaha", "Moto"));
+                    Vehiculo veh = obtenerVehiculo();
+                    x.insertVeh(veh);
                     break;
 
                 case "Ingresar Registro de Lavado":
-                    // x.insertLavado(new Lavado(3, 3363732, "ABC103"));
+                    Lavado lav = obtenerLavado(x);
+                    x.insertLavado(lav);
                     break;
 
                 case "Listar Registros de Lavado":
-                    // System.out.println(x.listarRegistros());
-
+                    System.out.println(x.listarRegistros()+"\n");
                     break;
 
                 case "Listar clientes":
-                    // System.out.println(x.listarClientes());
-                    break;
+                    System.out.println(x.listarClientes()+"\n");
 
-                case "[debug] Listar todo": // puede borrar esto después.
-                    System.out.println(x.tipoLavado().toString());
-                    System.out.println(x.tipoCliente().toString());
-                    System.out.println(x.listarRegistros());
-                    System.out.println(x.listarClientes());
                     break;
 
                 default:
@@ -106,26 +101,25 @@ public class Menu {
         }
     }
 
-    public static Cliente obtenerCliente() {
+    public static Cliente obtenerCliente(ConnectionBD x) {
         Cliente c;
-        String[] tipo_cliente = { "Estandar", "Premiun" };
-        c = new Cliente(input("id cliente"), menuOpciones(tipo_cliente), input("nombre"), input("apellido"),
-                input("Teléfono"), input("descuento"));
+        String[] tipo_cliente = Util.convertMap(x.tipoCliente());
+        c = new Cliente(input("id cliente"), (int) x.tipoCliente().get(tipo_cliente[menuOpciones(tipo_cliente)]), input("nombre"), input("apellido"),
+                input("Teléfono"));
         return c;
     }
 
-    public static Vehiculo obtenerVehiculo() {
+    public static Vehiculo obtenerVehiculo(ConnectionBD x) {
         Vehiculo v;
-        String[] marca = { "Mercedez ven10", "whatsapp", "taxi" };
-        v = new Vehiculo(input("Id vehiculo"), input("id cliente"), menuOpcionesString(marca),
-                input("Tipo_vehiculo"));
+        String[] tipoVeh = x.tipoVehiculo();
+        v = new Vehiculo(input("Id vehiculo"), input("id cliente"), input("Marca"), tipoVeh[menuOpciones(tipoVeh)]);
         return v;
     }
 
-    public static Lavado obtenerLavado() {
+    public static Lavado obtenerLavado(ConnectionBD x) {
         Lavado l = null;
-        String[] Tlav = { "Exterior", "Interior", "Completo" };
-        l = new Lavado(menuOpciones(Tlav), inputInt("Id Cliente"), input("Id Vehiculo"));
+        String[] Tlav = Util.convertMap(x.tipoLavado());
+        l = new Lavado((int) x.tipoLavado().get(Tlav[menuOpciones(Tlav)]), inputInt("Id Cliente"), input("Id Vehiculo"));
         return l;
     }
 

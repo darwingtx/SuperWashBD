@@ -6,7 +6,9 @@ import DataSchema.Vehiculo;
 import Others.Util;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static terminalUtils.TerminalUtils.*;
@@ -127,6 +129,25 @@ public class MariadbConnection implements ConnectionBD{
         }
         return tipos;
     }
+
+    @Override
+    public String[] tipoVehiculo() {
+        List<String> tipos = new ArrayList<>();
+        if (connection != null) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("Select DISTINCT Tipo_Vehiculo from vehiculo")) {
+                System.out.println("Seleccionando...");
+                while (resultSet.next()) {
+                    tipos.add(resultSet.getString("Tipo_Vehiculo"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("ERROR -> SQL Exception: " + e.getMessage());
+            }
+        }
+        return tipos.toArray(new String[0]);
+    }
+
     @Override
     public void insertClient(Cliente client) {
         String query = "CALL insertar_cliente (?, ?, ?, ?, ?);";
